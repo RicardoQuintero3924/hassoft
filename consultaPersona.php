@@ -8,7 +8,7 @@ session_start();
 $varsesion = $_SESSION['usuario'];
 
 if ($varsesion == null || $varsesion == '') {
-    echo '<script type="text/javascript"> alert("USTED NO TIENE AUTORIZACION")</script>';
+    echo '<script type="text/javascript"> alert("USTED NO TIENE AUTORIZACIÓN")</script>';
     die();
     header('location:index.php');
 }
@@ -36,7 +36,7 @@ if ($varsesion == null || $varsesion == '') {
         <div class="center">
             <!--Logo-->
             <div id="logo">
-                <img src="images/Hassoft.PNG" class="app-logo" alt="logotipo">
+                <a href="paginaPpal.php"><img src="images/Hassoft.PNG" class="app-logo" alt="logotipo"></a>
                 <span id="brand"><strong>HASSOFT</span>
 
             </div>
@@ -51,7 +51,7 @@ if ($varsesion == null || $varsesion == '') {
             <ul>
                 <li><a href="paginaPpal.php">Inicio</a></li>
                 <li><a href="persona.php">Persona</a></li>
-                <li><a href="categoria.php">Categoria</a></li>
+                <li><a href="categoria.php">Categoría</a></li>
                 <li><a href="finca.php">Finca</a></li>
                 <li><a href="perfil.php">Perfiles</a></li>
             </ul>
@@ -62,29 +62,23 @@ if ($varsesion == null || $varsesion == '') {
         <table class="tabla">
             <h2 id="titulo">Consulta Personas</h2>
             <tr class="celdas">
-                <th>cedula</th>
+                <th>Cédula</th>
                 <th>Nombres</th>
                 <th>Apellidos</th>
-                <th>celular</th>
-                <th>correo</th>
-                <th>finca</th>
-                <th>estado</th>
-                <th>modificar</th>
+                <th>Celular</th>
+                <th>Correo</th>
+                <th>Estado</th>
+                <th>Modificar</th>
             </tr>
 
-            <?php foreach ($personas as $persona) : 
-                 $id = $persona->cod_finca;
-                 $finca = $controlFinca->consultaFincaPorId($id);?>
+            <?php foreach ($personas as $persona) : ?>
                 <tr class="filas">
                     <td><?= $persona->cedula ?></td>
                     <td><?= $persona->primer_nombre . " " . $persona->segundo_nombre ?></td>
                     <td><?= $persona->primer_apellido . " " . $persona->segundo_apellido ?></td>
                     <td><?= $persona->celular ?></td>
                     <td><?= $persona->correo ?></td>
-                    <?php foreach($finca as $fin):?>
-                    <td><?= $fin->nombre ?></td>
-                    <?php endforeach;?>
-                    <td><?= $persona->estado ? 'ACTIVO' : 'NO' ?></td>
+                    <td><?= $persona->estado ? 'ACTIVO' : 'INACTIVO' ?></td>
                     <td><a href="modificaPersona.php?cedula=<?php echo $persona->cedula ?>" class="btn-table">Modificar</a></td>
                 </tr>
             <?php endforeach; ?>

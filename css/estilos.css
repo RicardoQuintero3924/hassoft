@@ -105,7 +105,7 @@ body {
     float: left;
     height: 100px;
     margin-top: -34px;
-    /* animation: girar infinite 30s linear; */
+    /*animation: girar infinite 30s linear;*/ 
 }
 @keyframes girar {
     from{
@@ -480,4 +480,19 @@ input[type="text"]:focus{
 .btn-table:hover{
     background-color: #444;
     color:#ccc;
+}
+
+.errorValidation {
+    margin: 0;
+    color: red;
+    font-size: 10px;
+}
+
+.desabilitarItem {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+.select2-selection__rendered {
+    font-size: 11px;
 }

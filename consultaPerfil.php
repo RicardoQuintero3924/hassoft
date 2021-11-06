@@ -6,7 +6,7 @@ session_start();
 $varsesion = $_SESSION['usuario'];
 error_reporting(0);
 if ($varsesion == null || $varsesion == '') {
-    echo '<script type="text/javascript"> alert("USTED NO TIENE AUTORIZACION")</script>';
+    echo '<script type="text/javascript"> alert("USTED NO TIENE AUTORIZACIÓN")</script>';
     die();
     header('location:index.php');
 }
@@ -32,7 +32,7 @@ if ($varsesion == null || $varsesion == '') {
         <div class="center">
             <!--Logo-->
             <div id="logo">
-                <img src="images/Hassoft.PNG" class="app-logo" alt="logotipo">
+                <a href="paginaPpal.php"><img src="images/Hassoft.PNG" class="app-logo" alt="logotipo"></a>
                 <span id="brand"><strong>HASSOFT</span>
 
             </div>
@@ -47,7 +47,7 @@ if ($varsesion == null || $varsesion == '') {
             <ul>
                 <li><a href="paginaPpal.php">Inicio</a></li>
                 <li><a href="persona.php">Persona</a></li>
-                <li><a href="categoria.php">Categoria</a></li>
+                <li><a href="categoria.php">Categoría</a></li>
                 <li><a href="finca.php">Finca</a></li>
                 <li><a href="perfil.php">Perfiles</a></li>
             </ul>
@@ -56,17 +56,17 @@ if ($varsesion == null || $varsesion == '') {
     <div class="clearfix"></div>
     <div class="separacion">
         <table class="tabla">
-            <h2 id="titulo">Consulta Categorias</h2>
+            <h2 id="titulo">Consulta Categorías</h2>
             <tr class="celdas">
                 <th>Descripción</th>
-                <th>estado</th>
-                <th>modificar</th>
+                <th>Estado</th>
+                <th>Modificar</th>
             </tr>
 
             <?php foreach ($perfiles as $perfil) :?>
                 <tr class="filas">
                     <td><?= $perfil->descripcion ?></td>
-                    <td><?= $perfil->estado ? 'ACTIVO' : 'NO' ?></td>
+                    <td><?= $perfil->estado ? 'ACTIVO' : 'INACTIVO' ?></td>
                     <td><a href="modificaPersona.php?cedula=<?= $perfil->cod_perfil ?>" class="btn-table">Modificar</a></td>
                 </tr>
             <?php endforeach; ?>

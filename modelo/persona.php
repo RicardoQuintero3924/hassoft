@@ -7,12 +7,12 @@ class Persona{
     private $sApellido;
     private $celular;
     private $correo;
-    private $finca;
+   
     private $perfil;
     private $estado;
 
 
-    public function __construct($cedula, $pNombre, $sNombre, $pApellido, $sApellido, $celular, $correo, $finca, $perfil, $estado){
+    public function __construct($cedula, $pNombre, $sNombre, $pApellido, $sApellido, $celular, $correo,  $perfil, $estado){
 
         $this->cedula = $cedula;
         $this->pNombre = $pNombre;
@@ -21,7 +21,6 @@ class Persona{
         $this->sApellido = $sApellido;
         $this->celular = $celular;
         $this->correo = $correo;
-        $this->finca = $finca;
         $this->perfil = $perfil;
         $this->estado = $estado;
     }
@@ -62,12 +61,6 @@ class Persona{
     public function SetCelular($celular){
         $this->celular = $celular;
     }    
-    public function GetFinca(){
-        return $this->finca;
-    }
-    public function SetFinca($finca){
-        $this->finca = $finca;
-    }
     public function GetCorreo(){
         return $this->correo;
     }

@@ -15,7 +15,7 @@ class controlPersona{
     }
     public function registroPersona($persona){
         try{
-            $sql = "insert into persona (cedula , primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, celular, correo, cod_finca, cod_perfil, estado) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "insert into persona (cedula , primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, celular, correo, estado, cod_perfil) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $prep= $this->cnx->prepare($sql);
             $prep->execute([
                 $persona->GetCedula(),
@@ -25,9 +25,8 @@ class controlPersona{
                 $persona->GetSApellido(),
                 $persona->GetCelular(),
                 $persona->GetCorreo(),
-                $persona->GetFinca(),
-                $persona->GetPerfil(),
-                $persona->GetEstado()
+                $persona->GetEstado(),
+                $persona->GetPerfil()
             ]);
         }catch(PDOException $ex){
             die($ex->getMessage());
@@ -58,7 +57,12 @@ class controlPersona{
     }
     public function actualizarPersona($persona){
         try{
-            $sql = "update persona set  primer_nombre = ?, segundo_nombre = ?, primer_apellido = ?, segundo_apellido = ?, celular = ?, correo = ?, estado = ?, cod_finca = ?, cod_perfil = ? where cedula = ?";
+            if ($persona->GetEstado() == 0) {
+                $sql = "update persona set  primer_nombre = ?, segundo_nombre = ?, primer_apellido = ?, segundo_apellido = ?, celular = ?, correo = ?, estado = 0, cod_perfil = ? where cedula = ?";
+            } else {
+                $sql = "update persona set  primer_nombre = ?, segundo_nombre = ?, primer_apellido = ?, segundo_apellido = ?, celular = ?, correo = ?, estado = 1, cod_perfil = ? where cedula = ?";
+            }
+            // $sql = "update persona set  primer_nombre = ?, segundo_nombre = ?, primer_apellido = ?, segundo_apellido = ?, celular = ?, correo = ?, estado = ?, cod_perfil = ? where cedula = ?";
             $prep = $this->cnx->prepare($sql);
             $prep->execute([
                 $persona->GetPNombre(),
@@ -67,9 +71,8 @@ class controlPersona{
                 $persona->GetSApellido(),
                 $persona->GetCelular(),
                 $persona->GetCorreo(),
-                $persona->GetFinca(),
                 $persona->GetPerfil(),
-                $persona->GetEstado(),
+                // $persona->GetEstado(),
                 $persona->GetCedula()
             ]);
 

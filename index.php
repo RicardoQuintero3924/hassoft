@@ -51,9 +51,9 @@ if(isset($_POST['Ingresar'])){
     <div class="article">
             <form class="formulario" method="post">
                 <H1><p>HASSOFT</p></H1>
-                <label for="usuario"><a href="" ><i class="fas fa-user" id="icon"></i></a>Usuario</label>
+                <label for="usuario"><i class="fas fa-user" id="icon"></i>Usuario <span style="color: red">*</span></label>
                 <input type="text" name="usuario" id="usuario">
-                <label for="contraseña"> <br><a href=""><i class="fas fa-unlock-alt" id="icon"></i></a>Contraseña</label>
+                <label for="contraseña"> <br><i class="fas fa-unlock-alt" id="icon"></i>Contraseña <span style="color: red">*</span></label>
                 <input type="password" name="contraseña" id="contraseña">
                 <input type="submit" value="Ingresar" name="Ingresar" id="btn">
             </form>

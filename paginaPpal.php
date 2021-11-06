@@ -3,7 +3,7 @@ session_start();
 $varsesion = $_SESSION['usuario'];
 error_reporting(1);
 if($varsesion == null || $varsesion == ''){
-    echo '<script type="text/javascript"> alert("USTED NO TIENE AUTORIZACION")</script>';
+    echo '<script type="text/javascript"> alert("USTED NO TIENE AUTORIZACIÓN")</script>';
     die();
     header('location:index.php');
 }
@@ -45,7 +45,7 @@ if($varsesion == null || $varsesion == ''){
         <div class="center">
             <!--Logo-->
             <div id="logo">
-                <img src="images/Hassoft.PNG" class="app-logo" alt="logotipo">
+                <a href="paginaPpal.php"><img src="images/Hassoft.PNG" class="app-logo" alt="logotipo"></a>
                 <span id="brand"><strong>HASSOFT</span>
 
             </div>
@@ -61,7 +61,7 @@ if($varsesion == null || $varsesion == ''){
                 <ul>
                     <li><a href="paginaPpal.php">Inicio</a></li>
                     <li><a href="persona.php">Persona</a></li>
-                    <li><a href="categoria.php">Categoria</a></li>
+                    <li><a href="categoria.php">Categoría</a></li>
                     <li><a href="finca.php">Finca</a></li>
                     <li><a href="perfil.php">Perfiles</a></li>
                 </ul>
@@ -69,7 +69,7 @@ if($varsesion == null || $varsesion == ''){
     </div>
     <div class="center">
         <section id="content">
-            <h2 class="subheader">Ultimas Cosechas</h2>
+            <h2 class="subheader">Últimas Cosechas</h2>
             <!-- listado articulos -->
             <div id="articles">
                 <article class="article-item" id="article-template">
@@ -88,12 +88,12 @@ if($varsesion == null || $varsesion == ''){
 
         <aside id="sidebar">
             <div id="nav-blog" class="sidebar-item">
-                <h3>Puedes hacer Esto</h3>
-                <a href="#" class="btn btn-success">Crear Articulo</a>
+                <h3>Puedes hacer esto</h3>
+                <a href="#" class="btn btn-success">Crear Artículo</a>
             </div>
             <div id="search" class="sidebar-item">
                 <h3>Buscador.</h3>
-                <p>Encuentra el Articulo que buscas</p>
+                <p>Encuentra el artículo que buscas</p>
                 <form action="">
                     <input type="text" name="search">
                     <input type="submit" name="submit" value="buscar" class="btn">

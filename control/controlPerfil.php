@@ -47,4 +47,11 @@ class ControlPerfil{
      }
      return $perfiles;
  }
+ public function actualizaFinca($finca){
+     try{
+        $sql= 'update finca set nombre = ?, direccion = ?, telefono = ?, correo = ?, nro_hectareas_cultivadas = ?, estado = ?, cod_municipio = ? where cod_finca = ?';
+     }catch(PDOException $ex){
+         die($ex->getMessage());
+     }
+ }
 }

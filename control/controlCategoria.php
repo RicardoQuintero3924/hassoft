@@ -38,4 +38,16 @@ class ControlCategoria{
      }
      return $categorias;
  }
+ public function consultaCategoriaPorId($id){
+    try{
+        $sql = "select * from categoria where cod_categoria = $id";
+        $prep = $this->cnx->prepare($sql);
+        $prep->execute();
+        $categoria = $prep->fetchAll(PDO::FETCH_OBJ);
+    }catch(PDOException $ex){
+        die($ex->getMessage());
+    }
+    return $categoria;
+ }
+
 }

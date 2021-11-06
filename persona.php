@@ -1,15 +1,13 @@
 <?php
-require_once 'control/controlFinca.php';
 require_once 'control/controlPerfil.php';
-$controlFinca = new ControlFinca();
-$fincas = $controlFinca->consultaFinca();
 $controlPerfil = new ControlPerfil();
 $perfiles = $controlPerfil->consultaPerfiles();
 session_start();
 $varsesion = $_SESSION['usuario'];
 error_reporting(0);
+
 if ($varsesion == null || $varsesion == '') {
-    echo '<script type="text/javascript"> alert("USTED NO TIENE AUTORIZACION")</script>';
+    echo '<script type="text/javascript"> alert("USTED NO TIENE AUTORIZACIÓN")</script>';
     die();
     header('location:index.php');
 }
@@ -23,7 +21,6 @@ if(isset($_POST['Registrar'])){
     $celular = $_POST['celular'];
     $correo = $_POST['correo'];
     $contraseña = $_POST['contraseña'];
-    $finca = $_POST['finca'];
     $perfil = $_POST['perfil'];
     $estado = $_POST['estado'];
 
@@ -31,7 +28,7 @@ if(isset($_POST['Registrar'])){
         $cedula = trim($cedula);
         $cedula = filter_var($cedula, FILTER_SANITIZE_NUMBER_INT);
     }else{
-        $errores .= 'EL CAMPO CEDULA ES OBLIGATORIO';
+        $errores .= 'EL CAMPO CÉDULA ES OBLIGATORIO';
     }
     if(!empty($pnombre)){
         $pnombre = trim($pnombre);
@@ -39,24 +36,14 @@ if(isset($_POST['Registrar'])){
     }else{
         $errores .= 'EL CAMPO PRIMER NOMBRE ES OBLIGATORIO';
     }
-    // if(!empty($snombre)){
-    //     $snombre = trim($snombre);
-    //     $snombre = filter_var($snombre, FILTER_SANITIZE_STRING);
-    // }else{
-    //     $errores .= 'EL CAMPO SEGUNDO NOMBRE ES REQUERIDO';
-    // }
+
     if(!empty($papellido)){
         $papellido = trim($papellido);
         $papellido = filter_var($papellido, FILTER_SANITIZE_STRING);
     }else{
         $errores .= 'EL CAMPO PRIMER APELLIDO ES REQUERIDO';
     }
-    if(!empty($sapellido)){
-        $sapellido = trim($sapellido);
-        $sapellido = filter_var($sapellido, FILTER_SANITIZE_STRING);
-    }else{
-        $errores .= 'EL CAMPO SEGUNDO APELLIDO ES REQUERIDO';
-    }
+    
     if(!empty($celular)){
         $celular = trim($celular);
         $celular = filter_var($celular, FILTER_SANITIZE_NUMBER_INT);
@@ -69,9 +56,7 @@ if(isset($_POST['Registrar'])){
     }else{
         $errores .= 'EL CORREO ES OBLIGATORIO';
     }
-    if($finca == ""){
-        $errores .= 'DEBE SELECCIONAR LA FINCA';
-    }
+    
     if($perfil == ""){
         $errores .= 'DEBE SELECCIONAR EL PERFIL';
     }
@@ -84,12 +69,12 @@ if(isset($_POST['Registrar'])){
        require_once 'control/controlUsuario.php';
        $controlPersona = new controlPersona();
        $controlUsuario = new ControlUsuario();
-       $persona = new Persona($cedula, $pnombre, $snombre, $papellido, $sapellido, $celular, $correo, $finca, $perfil, $estado);
+       $persona = new Persona($cedula, $pnombre, $snombre, $papellido, $sapellido, $celular, $correo, $perfil, $estado);
        $controlPersona->registroPersona($persona);
        $nombre = $pnombre ." ". $papellido;
        $usuario = new Usuario($nombre, $contraseña);
        $controlUsuario->registroUsuario($usuario);
-       echo '<script type="text/javascript"> alert("REGISTRO ALMACENADO CON EXITO")</script>';
+       echo '<script type="text/javascript"> alert("REGISTRO ALMACENADO CON ÉXITO")</script>';
     }else{
         echo '<script type="text/javascript"> alert("POR FAVOR DILIGENCIAR TODOS LOS CAMPOS")</script>';
     }
@@ -117,7 +102,7 @@ if(isset($_POST['Registrar'])){
         <div class="center">
             <!--Logo-->
             <div id="logo">
-                <img src="images/Hassoft.PNG" class="app-logo" alt="logotipo">
+                <a href="paginaPpal.php"><img src="images/Hassoft.PNG" class="app-logo" alt="logotipo"></a>
                 <span id="brand"><strong>HASSOFT</span>
 
             </div>
@@ -132,53 +117,47 @@ if(isset($_POST['Registrar'])){
             <ul>
                 <li><a href="paginaPpal.php">Inicio</a></li>
                 <li><a href="Consultapersona.php">Consulta Persona</a></li>
-                <li><a href="categoria.php">Categoria</a></li>
+                <li><a href="categoria.php">Categoría</a></li>
                 <li><a href="finca.php">Finca</a></li>
                 <li><a href="perfil.php">Perfiles</a></li>
             </ul>
         </nav>
     </div>
     <div class="clearfix"></div>
+    <p style="float: right; margin-right: 10px">Los campos con (<span style="color: red">*</span>) son obligatorios</p>
     <div class="bloque">
         <form action="" method="post" class="form">
             <h3><a href=""><i class="far fa-user"></i></a>Persona</h3>
-            <label for="cedula">cedula</label>
-            <input type="number" name="cedula" id="cedula" placeholder="cedula">
-            <label for="pnombre">Primer Nombre</label>
-            <input type="text" name="pnombre" id="pnombre" placeholder="Primer Nombre">
+            <label for="cedula">Cédula <span style="color: red">*</span></label>
+            <input type="number" name="cedula" id="cedula" placeholder="Cédula" onkeyup="validacionRequire(this)" required>
+            <label for="pnombre">Primer Nombre <span style="color: red">*</span></label>
+            <input type="text" name="pnombre" id="pnombre" placeholder="Primer Nombre" onkeyup="validacionRequire(this)" required>
             <label for="snombre">Segundo Nombre</label>
-            <input type="text" name="snombre" id="snombre" placeholder="Segundo Nombre">
-            <label for="papellido">Primer Apellido</label>
-            <input type="text" name="papellido" id="papellido" placeholder="Primer Apellido">
+            <input type="text" name="snombre" id="snombre" placeholder="Segundo Nombre" onkeyup="validarForm(this.parentNode)">
+            <label for="papellido">Primer Apellido <span style="color: red">*</span></label>
+            <input type="text" name="papellido" id="papellido" placeholder="Primer Apellido" onkeyup="validacionRequire(this)" required>
             <label for="sapellido">Segundo Apellido</label>
-            <input type="text" name="sapellido" id="sapellido" placeholder="Segundo Apellido">
-            <label for="celular">Celular</label>
-            <input type="number" name="celular" id="celular" placeholder="Celular">
-            <label for="correo">Correo</label>
-            <input type="email" name="correo" id="correo" placeholder="Correo">
-            <label for="contraseña">Contraseña</label>
-            <input type="text" name="contraseña" id="contraseña" placeholder="Contraseña">
-            <label for="finca">Finca</label>
-            <select name="finca" id="finca">
+            <input type="text" name="sapellido" id="sapellido" placeholder="Segundo Apellido" onkeyup="validarForm(this.parentNode)">
+            <label for="celular">Celular <span style="color: red">*</span></label>
+            <input type="number" name="celular" id="celular" placeholder="Celular" onkeyup="validacionNumeroCelular(this)" required>
+            <label for="correo">Correo <span style="color: red">*</span></label>
+            <input type="email" name="correo" id="correo" placeholder="Correo" onkeyup="validacionCorreo(this)" placeholder="Correo" required>
+            <label for="contraseña">Contraseña <span style="color: red">*</span></label>
+            <input type="text" name="contraseña" id="contraseña" placeholder="Contraseña" onkeyup="validacionRequire(this)" required>
+            <label for="estado">Estado <span style="color: red">*</span></label>
+            <select name="estado" id="estado" onchange="validarForm(this.parentNode)" required>
                 <option value="" disabled selected>--Seleccione--</option>
-                <?php foreach($fincas as $finca):?>
-                <option value="<?php echo $finca->cod_finca ?>"><?php echo $finca->cod_finca." - ". $finca->nombre ?></option>
-                <?php endforeach; ?>
+                <option value="1">Activo</option>
+                <option value="0">Inactivo</option>
             </select>
-            <label for="perfil">Perfil</label>
-            <select name="perfil" id="perfil">
+            <label for="perfil">Perfil <span style="color: red">*</span></label>
+            <select name="perfil" id="perfil" onchange="validarForm(this.parentNode)" required>
                 <option value="" disabled selected>--Selecione--</option>
                 <?php foreach($perfiles as $perfil):?>
                 <option value="<?php echo $perfil->cod_perfil ?>"><?php echo $perfil->cod_perfil ." - ". $perfil->descripcion ?></option>
                 <?php endforeach;?>
             </select>
-            <label for="estado">Estado</label>
-            <select name="estado" id="estado">
-                <option value="" disabled selected>--Seleccione--</option>
-                <option value="activo">Activo</option>
-                <option value="inactivo">Inactivo</option>
-            </select>
-            <input type="submit" value="REGISTRAR" name="Registrar" class="btn-sesion">
+            <input type="submit" value="REGISTRAR" name="Registrar" class="btn-sesion desabilitarItem" id="submit">
         </form>
     </div>
 
@@ -189,6 +168,8 @@ if(isset($_POST['Registrar'])){
         </div>
 
     </footer>
+        
+    <script src="validacion/validacion.js"></script>
 </body>
 
 </html>

@@ -8,7 +8,7 @@ session_start();
 $varsesion = $_SESSION['usuario'];
 error_reporting(0);
 if ($varsesion == null || $varsesion == '') {
-    echo '<script type="text/javascript"> alert("USTED NO TIENE AUTORIZACION")</script>';
+    echo '<script type="text/javascript"> alert("USTED NO TIENE AUTORIZACIÓN")</script>';
     die();
     header('location:index.php');
 }
@@ -35,7 +35,7 @@ if ($varsesion == null || $varsesion == '') {
         <div class="center">
             <!--Logo-->
             <div id="logo">
-                <img src="images/Hassoft.PNG" class="app-logo" alt="logotipo">
+                <a href="paginaPpal.php"><img src="images/Hassoft.PNG" class="app-logo" alt="logotipo"></a>
                 <span id="brand"><strong>HASSOFT</span>
 
             </div>
@@ -50,7 +50,7 @@ if ($varsesion == null || $varsesion == '') {
             <ul>
                 <li><a href="paginaPpal.php">Inicio</a></li>
                 <li><a href="persona.php">Persona</a></li>
-                <li><a href="categoria.php">Categoria</a></li>
+                <li><a href="categoria.php">Categoría</a></li>
                 <li><a href="finca.php">Finca</a></li>
                 <li><a href="perfil.php">Perfiles</a></li>
             </ul>
@@ -59,16 +59,16 @@ if ($varsesion == null || $varsesion == '') {
     <div class="clearfix"></div>
     <div class="separacion">
         <table class="tabla">
-            <h2 id="titulo">Consulta Categorias</h2>
+            <h2 id="titulo">Consulta Categorías</h2>
             <tr class="celdas">
                 <th>Nombres</th>
                 <th>Dirección</th>
-                <th>Telefono</th>
+                <th>Teléfono</th>
                 <th>Correo</th>
-                <th>Número Hectareas</th>
+                <th>Número Hectáreas</th>
                 <th>Municipio</th>
-                <th>estado</th>
-                <th>modificar</th>
+                <th>Estado</th>
+                <th>Modificar</th>
             </tr>
 
             <?php foreach ($fincas as $finca) :
@@ -83,7 +83,7 @@ if ($varsesion == null || $varsesion == '') {
                     <?php foreach($municipios as $municipio):?>
                     <td><?= $municipio->nombre?></td>
                     <?php endforeach; ?>
-                    <td><?= $finca->estado ? 'ACTIVO' : 'NO' ?></td>
+                    <td><?= $finca->estado ? 'ACTIVO' : 'INACTIVO' ?></td>
                     <td><a href="modificaFinca.php?codFinca=<?= $finca->cod_finca ?>" class="btn-table">Modificar</a></td>
                 </tr>
             <?php endforeach; ?>

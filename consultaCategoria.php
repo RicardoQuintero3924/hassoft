@@ -4,14 +4,13 @@ $controlCategoria = new ControlCategoria();
 $categorias = $controlCategoria->consultaCategorias();
 session_start();
 $varsesion = $_SESSION['usuario'];
-error_reporting(0);
+//error_reporting(0);
 if ($varsesion == null || $varsesion == '') {
-    echo '<script type="text/javascript"> alert("USTED NO TIENE AUTORIZACION")</script>';
+    echo '<script type="text/javascript"> alert("USTED NO TIENE AUTORIZACIÓN")</script>';
     die();
     header('location:index.php');
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="es">
@@ -34,7 +33,7 @@ if ($varsesion == null || $varsesion == '') {
         <div class="center">
             <!--Logo-->
             <div id="logo">
-                <img src="images/Hassoft.PNG" class="app-logo" alt="logotipo">
+                <a href="paginaPpal.php"><img src="images/Hassoft.PNG" class="app-logo" alt="logotipo"></a>
                 <span id="brand"><strong>HASSOFT</span>
 
             </div>
@@ -49,7 +48,7 @@ if ($varsesion == null || $varsesion == '') {
             <ul>
                 <li><a href="paginaPpal.php">Inicio</a></li>
                 <li><a href="persona.php">Persona</a></li>
-                <li><a href="categoria.php">Categoria</a></li>
+                <li><a href="categoria.php">Categoría</a></li>
                 <li><a href="finca.php">Finca</a></li>
                 <li><a href="perfil.php">Perfiles</a></li>
             </ul>
@@ -58,14 +57,14 @@ if ($varsesion == null || $varsesion == '') {
     <div class="clearfix"></div>
     <div class="separacion">
         <table class="tabla">
-            <h2 id="titulo">Consulta Categorias</h2>
+            <h2 id="titulo">Consulta Categorías</h2>
             <tr class="celdas">
                 <th>Nombres</th>
-                <th>Descripcion</th>
+                <th>Descripción</th>
                 <th>Peso inicial</th>
                 <th>Peso final</th>
-                <th>estado</th>
-                <th>modificar</th>
+                <th>Estado</th>
+                <th>Modificar</th>
             </tr>
 
             <?php foreach ($categorias as $categoria) :?>
@@ -75,7 +74,7 @@ if ($varsesion == null || $varsesion == '') {
                     <td><?= $categoria->peso_inicial ." Gr"?></td>
                     <td><?= $categoria->peso_final ." Gr" ?></td>
                     <td><?= $categoria->estado ? 'ACTIVO' : 'NO' ?></td>
-                    <td><a href="modificaPersona.php?cedula=<?= $categoria->cod_categoria ?>" class="btn-table">Modificar</a></td>
+                    <td><a href="modificaCategoria.php?categoria=<?= $categoria->cod_categoria ?>" class="btn-table">Modificar</a></td>
                 </tr>
             <?php endforeach; ?>
 

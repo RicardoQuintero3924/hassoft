@@ -1,6 +1,22 @@
 <?php
+require_once 'control/controlFinca.php';
+require_once 'control/controlPersona.php';
+require_once 'control/controlMunicipio.php';
 $codFinca = $_GET['codFinca'];
-
+$controlFinca = new ControlFinca();
+$finca = $controlFinca->consultaFincaPorId($codFinca);
+$controlPersona = new ControlPersona();
+$personas = $controlPersona->consultaPersona();
+$controlMunicipio = new ControlMunicipio();
+$municipios = $controlMunicipio->consultaMunicipio();
+session_start();
+$varsesion = $_SESSION['usuario'];
+error_reporting(0);
+if ($varsesion == null || $varsesion == '') {
+    echo '<script type="text/javascript"> alert("USTED NO TIENE AUTORIZACIÓN")</script>';
+    die();
+    header('location:index.php');
+}
 
 
 ?>
@@ -25,7 +41,7 @@ $codFinca = $_GET['codFinca'];
         <div class="center">
             <!--Logo-->
             <div id="logo">
-                <img src="images/Hassoft.PNG" class="app-logo" alt="logotipo">
+                <a href="paginaPpal.php"><img src="images/Hassoft.PNG" class="app-logo" alt="logotipo"></a>
                 <span id="brand"><strong>HASSOFT</span>
 
             </div>
@@ -33,6 +49,14 @@ $codFinca = $_GET['codFinca'];
             <!--LIMPIAR FLOTADOS-->
             <div class="clearfix"></div>
         </div>
+            
+        <!-- Select 2 -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha256-aAr2Zpq8MZ+YA/D6JtRD3xtrwpEz2IqOS+pWD/7XKIw=" crossorigin="anonymous" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha256-OFRAJNoaD8L3Br5lglV7VyLRf0itmoBzWUoM+Sji4/8=" crossorigin="anonymous"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+            
     </header>
     <div id="slider" class="slider-big">
         <!--Menu-->
@@ -40,40 +64,51 @@ $codFinca = $_GET['codFinca'];
             <ul>
                 <li><a href="paginaPpal.php">Inicio</a></li>
                 <li><a href="persona.php">Persona</a></li>
-                <li><a href="categoria.php">Categoria</a></li>
+                <li><a href="categoria.php">Categoría</a></li>
                 <li><a href="consultaFinca.php">Consulta Finca</a></li>
                 <li><a href="perfil.php">Perfiles</a></li>
             </ul>
         </nav>
     </div>
     <div class="clearfix"></div>
+    <p style="float: right; margin-right: 10px">Los campos con (<span style="color: red">*</span>) son obligatorios</p>
     <div class="bloque">
         <form action="" method="post" class="form">
+            <?php foreach($finca as $fin):  ?>
             <h3><a href=""><i class="fas fa-tree"></i></a>FINCA</h3>
-            <label for="nombre">Nombre</label>
-            <input type="text" name="nombre" id="nombre" placeholder="Nombre">
-            <label for="direccion">Direccion</label>
-            <input type="text" name="direccion" id="direccion" placeholder="Direccion">
-            <label for="telefono">telefono</label>
-            <input type="number" name="telefono" id="telefono" placeholder="telefono">
-            <label for="correo">Correo</label>
-            <input type="email" name="correo" id="correo" placeholder="Correo">
-            <label for="hectareas">Numero Hectareas</label>
-            <input type="number" name="hectareas" id="hectareas" placeholder="Número Hectareas">
-            <label for="municipio">Municipio</label>
-            <select name="municipio" id="municipio">
+            <label for="nombre">Nombre <span style="color: red">*</span></label>
+            <input type="text" value="<?php $fin->nombre ?>" name="nombre" id="nombre" placeholder="Nombre" onkeyup="validacionRequire(this)" required>
+            <label for="direccion">Dirección <span style="color: red">*</span></label>
+            <input type="text" name="direccion" value="<?php $fin->direccion ?>" id="direccion" placeholder="Dirección" onkeyup="validacionRequire(this)" required>
+            <label for="telefono">Teléfono <span style="color: red">*</span></label>
+            <input type="number" name="telefono" id="telefono" placeholder="Teléfono" onkeyup="validacionNumeroTelefono(this)" required>
+            <label for="correo">Correo <span style="color: red">*</span></label>
+            <input type="email" name="correo" id="correo" placeholder="Correo" onkeyup="validacionCorreo(this)" required>
+            <label for="hectareas">Número Hectáreas <span style="color: red">*</span></label>
+            <input type="number" name="hectareas" id="hectareas" placeholder="Número Hectáreas" onkeyup="validacionRequire(this)" required>
+            <label for="municipio">Municipio <span style="color: red">*</span></label>
+            <select name="municipio" id="municipio" onchange="validarForm(this.parentNode)" required>
                 <option value="" disabled selected>--Seleccione--</option>
                 <?php foreach($municipios as $town):?>
                 <option value="<?php echo $town->cod_municipio  ?>"><?php echo $town->cod_municipio ." - ". $town->nombre?></option>
                 <?php endforeach;?>
             </select>
-            <label for="estado">Estado</label>
-            <select name="estado" id="estado">
+            <label for="estado">Estado <span style="color: red">*</span></label>
+            <select name="estado" id="estado" onchange="validarForm(this.parentNode)" required>
                 <option value="" disabled selected>--Seleccione--</option>
                 <option value="1">Activo</option>
                 <option value="0">Inactivo</option>
             </select>
-            <input type="submit" value="REGISTRAR" name="Registrar" class="btn-sesion">
+            <label for="estado">Personas asignadas</label>
+            <div style="margin-bottom: 15px">
+                <select class="category related-post form-control" name="personas[]" id="personas" multiple onchange="validarForm(this.parentNode)" required>
+                     <?php foreach($personas as $persona):?>
+                        <option value="<?php echo $persona->cedula ?>"><?php echo $persona->cedula ." - ". $persona->primer_nombre . " ". $persona->primer_apellido ?></option>
+                    <?php endforeach;?>
+                </select>
+            </div>
+            <?php endforeach; ?>
+            <input type="submit" value="REGISTRAR" name="Registrar" class="btn-sesion desabilitarItem" id="submit">
         </form>
     </div>
 
@@ -84,6 +119,14 @@ $codFinca = $_GET['codFinca'];
         </div>
 
     </footer>
+        
+    <script src="validacion/validacion.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.category').select2();
+        });
+    </script>
 </body>
 
 </html>
