@@ -10,7 +10,7 @@ if ($varsesion == null || $varsesion == '') {
 $errores = "";
 if(isset($_POST['Registrar'])){
     $descripcion = $_POST['descripcion'];
-    $estado = $_POST['estado'];
+    $estado = 1;
 
     if(!empty($descripcion)){
         $descripcion = trim($descripcion);
@@ -18,9 +18,7 @@ if(isset($_POST['Registrar'])){
     }else{
         $errores .= "DEBE DILIGENCIAR LA DESCRIPCION";
     }
-    if($estado == ""){
-        $errores .= "DEBE SELECCIONAR EL ESTADO";
-    }
+   
 
     if(!$errores){
         require_once 'control/controlPerfil.php';
@@ -82,12 +80,7 @@ if(isset($_POST['Registrar'])){
             <h3><a href=""><i class="fas fa-users"></i></a>PERFIL</h3>
             <label for="descripcion">Descripción <span style="color: red">*</span></label>
             <input type="text" name="descripcion" id="descripcion" placeholder="Descripción" onkeyup="validacionRequire(this)" required>
-            <label for="estado">Estado <span style="color: red">*</span></label>
-            <select name="estado" id="estado" onchange="validarForm(this.parentNode)" required>
-                <option value="" disabled selected>--Seleccione--</option>
-                <option value="1">Activo</option>
-                <option value="0">Inactivo</option>
-            </select>
+            
             <input type="submit" value="REGISTRAR" name="Registrar" class="btn-sesion desabilitarItem" id="submit">
         </form>
     </div>

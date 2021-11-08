@@ -22,7 +22,7 @@ if(isset($_POST['Registrar'])){
     $correo = $_POST['correo'];
     $contraseña = $_POST['contraseña'];
     $perfil = $_POST['perfil'];
-    $estado = $_POST['estado'];
+    $estado = 1;
 
     if(!empty($cedula)){
         $cedula = trim($cedula);
@@ -60,9 +60,7 @@ if(isset($_POST['Registrar'])){
     if($perfil == ""){
         $errores .= 'DEBE SELECCIONAR EL PERFIL';
     }
-    if($estado == ""){
-        $errores .= 'DEBE SELECCIONAR EL ESTADO';
-    }
+    
 
     if(!$errores){
        require_once 'control/controlPersona.php';
@@ -145,11 +143,6 @@ if(isset($_POST['Registrar'])){
             <label for="contraseña">Contraseña <span style="color: red">*</span></label>
             <input type="text" name="contraseña" id="contraseña" placeholder="Contraseña" onkeyup="validacionRequire(this)" required>
             <label for="estado">Estado <span style="color: red">*</span></label>
-            <select name="estado" id="estado" onchange="validarForm(this.parentNode)" required>
-                <option value="" disabled selected>--Seleccione--</option>
-                <option value="1">Activo</option>
-                <option value="0">Inactivo</option>
-            </select>
             <label for="perfil">Perfil <span style="color: red">*</span></label>
             <select name="perfil" id="perfil" onchange="validarForm(this.parentNode)" required>
                 <option value="" disabled selected>--Selecione--</option>

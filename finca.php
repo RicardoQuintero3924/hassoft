@@ -21,7 +21,7 @@ if(isset($_POST['Registrar'])){
     $correo = $_POST['correo'];
     $nroHectareas = $_POST['hectareas'];
     $municipio = $_POST['municipio'];
-    $estado = $_POST['estado'];
+    $estado = 1;
     $personas = $_POST['personas'];
 
     if(!empty($nombre)){
@@ -57,9 +57,7 @@ if(isset($_POST['Registrar'])){
     if($municipio == ""){
         $errores .= "DEBE SELECCIONAR UN MUNICIPIO";
     }
-    if($estado == ""){
-        $errores .= "DEBE SELECCIONAR UN ESTADO";
-    }
+  
     if(!$errores){
         require_once 'control/controlFinca.php';
         $controlFinca = new ControlFinca();
@@ -141,12 +139,6 @@ if(isset($_POST['Registrar'])){
                 <?php foreach($municipios as $town):?>
                 <option value="<?php echo $town->cod_municipio  ?>"><?php echo $town->cod_municipio ." - ". $town->nombre?></option>
                 <?php endforeach;?>
-            </select>
-            <label for="estado">Estado <span style="color: red">*</span></label>
-            <select name="estado" id="estado" onchange="validarForm(this.parentNode)" required>
-                <option value="" disabled selected>--Seleccione--</option>
-                <option value="1">Activo</option>
-                <option value="0">Inactivo</option>
             </select>
             <label for="estado">Personas asignadas <span style="color: red">*</span></label>
             <div style="margin-bottom: 15px">

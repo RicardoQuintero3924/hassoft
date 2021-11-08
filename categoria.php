@@ -13,7 +13,7 @@ if(isset($_POST['Registrar'])){
     $descripcion = $_POST['descripcion'];
     $inicial = $_POST['inicial'];
     $final = $_POST['final'];
-    $estado = $_POST['estado'];
+    $estado = 1;
 
     if(!empty($nombre)){
         $nombre = trim($nombre);
@@ -39,10 +39,7 @@ if(isset($_POST['Registrar'])){
     }else{
         $errores .= "DEBE INGRESAR EL PESO FINAL";
     }
-    if($estado == ""){
-        $errores .= "DEBE SELECCIONAR EL ESTADO";
-    }
-
+   
     if(!$errores){
         require_once 'control/controlCategoria.php';
         $controlCategoria = new ControlCategoria();
@@ -109,12 +106,6 @@ if(isset($_POST['Registrar'])){
             <input type="number" name="inicial" id="inicial" placeholder="Peso Inicial" onkeyup="validacionRequire(this)" required>
             <label for="final">Peso Final <span style="color: red">*</span></label>
             <input type="number" name="final" id="final" placeholder="Peso Final" onkeyup="validacionRequire(this)" required>
-            <label for="estado">Estado <span style="color: red">*</span></label>
-            <select name="estado" id="estado" onchange="validarForm(this.parentNode)" required>
-                <option value="" disabled selected>--Seleccione--</option>
-                <option value="1">Activo</option>
-                <option value="0">Inactivo</option>
-            </select>
             <input type="submit" value="REGISTRAR" name="Registrar" class="btn-sesion desabilitarItem" id="submit">
         </form>
     </div>
