@@ -127,10 +127,10 @@ if(isset($_POST['Registrar'])){
             <input type="text" name="nombre" id="nombre" placeholder="Nombre" onkeyup="validacionRequire(this)" required>
             <label for="direccion">Dirección <span style="color: red">*</span></label>
             <input type="text" name="direccion" id="direccion" placeholder="Dirección" onkeyup="validacionRequire(this)" required>
-            <label for="telefono">Teléfono <span style="color: red">*</span></label>
+            <label for="telefono">Teléfono fijo <span style="color: red">*</span></label>
             <input type="number" name="telefono" id="telefono" placeholder="Teléfono" onkeyup="validacionNumeroTelefono(this)" required>
-            <label for="correo">Correo <span style="color: red">*</span></label>
-            <input type="email" name="correo" id="correo" placeholder="Correo" onkeyup="validacionCorreo(this)" required>
+            <label for="correo">Correo</label>
+            <input type="email" name="correo" id="correo" placeholder="Correo" onkeyup="validacionCorreo(this)">
             <label for="hectareas">Número Hectáreas <span style="color: red">*</span></label>
             <input type="number" name="hectareas" id="hectareas" placeholder="Número Hectáreas" onkeyup="validacionRequire(this)" required>
             <label for="municipio">Municipio <span style="color: red">*</span></label>

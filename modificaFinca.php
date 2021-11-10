@@ -80,7 +80,7 @@ if ($varsesion == null || $varsesion == '') {
             <input type="text" value="<?php $fin->nombre ?>" name="nombre" id="nombre" placeholder="Nombre" onkeyup="validacionRequire(this)" required>
             <label for="direccion">Dirección <span style="color: red">*</span></label>
             <input type="text" name="direccion" value="<?php $fin->direccion ?>" id="direccion" placeholder="Dirección" onkeyup="validacionRequire(this)" required>
-            <label for="telefono">Teléfono <span style="color: red">*</span></label>
+            <label for="telefono">Teléfono fijo <span style="color: red">*</span></label>
             <input type="number" name="telefono" id="telefono" placeholder="Teléfono" onkeyup="validacionNumeroTelefono(this)" required>
             <label for="correo">Correo <span style="color: red">*</span></label>
             <input type="email" name="correo" id="correo" placeholder="Correo" onkeyup="validacionCorreo(this)" required>

@@ -109,16 +109,16 @@ if(isset($_POST['Modificar'])){
         <?php foreach($categoria as $cate): ?>
         <form action="" method="post" class="form">
             <h3><a href=""><i class="far fa-id-card"></i></a>CATEGORÍA</h3>
-            <label for="nombre">Nombre</label>
-            <input type="text" name="nombre" value="<?= $cate->nombre ?>" id="nombre" placeholder="Nombre">
-            <label for="descripcion">Descripción</label>
+            <label for="nombre">Nombre <span style="color: red">*</span></label>
+            <input type="text" name="nombre" value="<?= $cate->nombre ?>" id="nombre" placeholder="Nombre" onkeyup="validacionRequire(this)" required>
+            <label for="descripcion">Descripción <span style="color: red">*</span></label onkeyup="validacionRequire(this)" required>
             <input type="text" name="descripcion" value="<?= $cate->descripcion ?>" id="descripcion" placeholder="Descripción">
-            <label for="inicial">Peso Inicial</label>
-            <input type="number" name="inicial" id="inicial" value="<?= $cate->peso_inicial ?>" placeholder="Peso Inicial">
-            <label for="final">Peso Final</label>
-            <input type="number" name="final" id="final" value="<?= $cate->peso_final ?>" placeholder="Peso Final">
-            <label for="estado">Estado</label>
-            <select name="estado" id="estado">
+            <label for="inicial">Peso Inicial <span style="color: red">*</span></label>
+            <input type="number" name="inicial" id="inicial" value="<?= $cate->peso_inicial ?>" placeholder="Peso Inicial" onkeyup="validacionCatargoria(document.getElementById('final'), this, this)" required>
+            <label for="final">Peso Final <span style="color: red">*</span></label>
+            <input type="number" name="final" id="final" value="<?= $cate->peso_final ?>" placeholder="Peso Final" onkeyup="validacionCatargoria(this, document.getElementById('inicial'), this)" required>
+            <label for="estado">Estado <span style="color: red">*</span></label>
+            <select name="estado" id="estado" onchange="validarForm(this.parentNode)" required>
                 <option value="" disabled selected>--Seleccione--</option>
                 <?php if($cate->estado == 1) ?>
                 <option value="<?= $cate->estado ?>" selected>Activo</option>
@@ -136,6 +136,8 @@ if(isset($_POST['Modificar'])){
         </div>
 
     </footer>
+
+    <script src="validacion/validacion.js"></script>
 </body>
 
 </html>

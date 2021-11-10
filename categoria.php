@@ -103,9 +103,9 @@ if(isset($_POST['Registrar'])){
             <label for="descripcion">Descripción <span style="color: red">*</span></label>
             <input type="text" name="descripcion" id="descripcion" placeholder="Descripción" onkeyup="validacionRequire(this)" required>
             <label for="inicial">Peso Inicial <span style="color: red">*</span></label>
-            <input type="number" name="inicial" id="inicial" placeholder="Peso Inicial" onkeyup="validacionRequire(this)" required>
+            <input type="number" name="inicial" id="inicial" placeholder="Peso Inicial" onkeyup="validacionCatargoria(document.getElementById('final'), this, this)" required>
             <label for="final">Peso Final <span style="color: red">*</span></label>
-            <input type="number" name="final" id="final" placeholder="Peso Final" onkeyup="validacionRequire(this)" required>
+            <input type="number" name="final" id="final" placeholder="Peso Final" onkeyup="validacionCatargoria(this, document.getElementById('inicial'), this)" required>
             <input type="submit" value="REGISTRAR" name="Registrar" class="btn-sesion desabilitarItem" id="submit">
         </form>
     </div>
