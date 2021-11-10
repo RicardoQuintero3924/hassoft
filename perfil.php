@@ -54,7 +54,6 @@ if(isset($_POST['Registrar'])){
             <div id="logo">
                 <a href="paginaPpal.php"><img src="images/Hassoft.PNG" class="app-logo" alt="logotipo"></a>
                 <span id="brand"><strong>HASSOFT</span>
-
             </div>
 
             <!--LIMPIAR FLOTADOS-->

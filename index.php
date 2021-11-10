@@ -1,6 +1,9 @@
 <?php
 session_start();
 $errores = '';
+require_once 'control/controlUsuario.php';
+$controlUsuario = new ControlUsuario();
+
 
 if(isset($_POST['Ingresar'])){
     $usuario = $_POST['usuario'];
@@ -18,21 +21,25 @@ if(isset($_POST['Ingresar'])){
     }else{
         $errores .= "Ingrese la Clave";
     }
-    require_once 'control/controlUsuario.php';
-    $controlUsuario = new ControlUsuario();
     $users = $controlUsuario->consultaUsuario($usuario);
-
     foreach ($users as $user){
         $password = $user->clave;
         $nombre = $user->nombre;
+        $state = $user->Estado;
     }
+    $estado = (int) $state;
     if(($clave === $password)){
-        $_SESSION['usuario'] = $nombre;
-        header('location:paginaPpal.php');
+        if($estado != 0){
+            $_SESSION['usuario'] = $nombre;
+            header('location:paginaPpal.php');
+        }else{
+            echo '<script type="text/javascript"> alert("Usuario Inactivo")</script>';
+        }
+        
     }else{
         echo '<script type="text/javascript"> alert("Ingrese Su Contraseña Correcta")</script>';
     }
-
+ var_dump($estado);
 }
 
 ?>

@@ -2,11 +2,13 @@
 class Usuario{
     private $nombre;
     private $clave;
+    private $estado;
 
-    public function __construct($nombre, $clave)
+    public function __construct($nombre, $clave, $estado)
     {
         $this->nombre = $nombre;
         $this->clave = $clave;
+        $this->estado = $estado;
     }
     public function GetNombre(){
         return $this->nombre;
@@ -19,5 +21,11 @@ class Usuario{
     }
     public function SetClave($clave){
         $this->clave = $clave;
+    }
+    public function GetEstado(){
+        return $this->estado;
+    }
+    public function SetEstado($estado){
+        $this->estado = $estado;
     }
 }

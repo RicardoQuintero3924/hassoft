@@ -15,11 +15,12 @@ class ControlUsuario{
     }
     public function registroUsuario($usuario){
         try{
-            $sql = "insert into usuario (nombre, clave) values (?, ?)";
+            $sql = "insert into usuario (nombre, clave, estado) values (?, ?, ?)";
             $prep = $this->cnx->prepare($sql);
             $prep->execute([
                 $usuario->GetNombre(),
-                $usuario->GetClave()
+                $usuario->GetClave(),
+                $usuario->GetEstado()
             ]);
         }catch(PDOException $ex){
             die($ex->getMessage());

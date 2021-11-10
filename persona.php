@@ -70,7 +70,7 @@ if(isset($_POST['Registrar'])){
        $persona = new Persona($cedula, $pnombre, $snombre, $papellido, $sapellido, $celular, $correo, $perfil, $estado);
        $controlPersona->registroPersona($persona);
        $nombre = $pnombre ." ". $papellido;
-       $usuario = new Usuario($nombre, $contraseña);
+       $usuario = new Usuario($nombre, $contraseña, $estado);
        $controlUsuario->registroUsuario($usuario);
        echo '<script type="text/javascript"> alert("REGISTRO ALMACENADO CON ÉXITO")</script>';
     }else{
