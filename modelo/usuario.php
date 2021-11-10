@@ -1,14 +1,22 @@
 <?php
 class Usuario{
+    private $id;
     private $nombre;
     private $clave;
     private $estado;
 
-    public function __construct($nombre, $clave, $estado)
+    public function __construct($id,$nombre, $clave, $estado)
     {
+        $this->id = $id;
         $this->nombre = $nombre;
         $this->clave = $clave;
         $this->estado = $estado;
+    }
+    public function GetId(){
+        return $this->id;
+    }
+    public function SetId($id){
+        $this->id = $id;
     }
     public function GetNombre(){
         return $this->nombre;

@@ -1,6 +1,7 @@
 <?php
 require_once 'control/controlPersona.php';
 require_once 'control/controlPerfil.php';
+require_once 'control/controlUsuario.php';
 session_start();
 $varsesion = $_SESSION['usuario'];
 // error_reporting(0);
@@ -13,6 +14,7 @@ if ($varsesion == null || $varsesion == '') {
 
 $controlPersona = new controlPersona();
 $controlPerfil = new ControlPerfil();
+$controlUsuario = new ControlUsuario();
 $id = $_GET['cedula'];
 $persona = $controlPersona->consultaPersonaPorId($id);
 $errores = '';
@@ -71,13 +73,14 @@ if(isset($_POST['Modificar'])){
     if($estado == ""){
         $errores .= 'DEBE SELECCIONAR EL ESTADO';
     }
-
+   
     if(!$errores){  
         require_once 'modelo/persona.php';
         $controlPersona = new controlPersona();
-    
         $persona = new Persona($cedula, $pnombre, $snombre, $papellido, $sapellido, $celular, $correo, $perfil, $estado);
         $controlPersona->actualizarPersona($persona);
+        $usuario = $pnombre." ".$papellido;
+        $controlUsuario->actualizarEstado($estado, $cedula);
         echo '<script type="text/javascript"> alert("REGISTRO MODIFICADO CON ÉXITO")</script>';
         header('location:consultaPersona.php');
         
@@ -155,10 +158,10 @@ if(isset($_POST['Modificar'])){
             <select name="estado" id="estado" onchange="validarForm(this.parentNode)" required>
                 <option value="" disabled selected>--Seleccione--</option>
                 <?php $estadoA = $person->estado;
-                if($estadoA == 1){?>
+                if($estadoA == '1'){?>
                 <option value="1" selected><?= $person->estado." "."Activo" ?></option>
                 <option value="0" >Inactivo </option>
-                <?php }else if($estadoA == 0){ ?>
+                <?php }else if($estadoA == '0'){ ?>
                 <option value="0" selected><?= $person->estado." "."Inactivo"?></option>
                 <option value="1" >Activo</option>  
                 <?php }?>

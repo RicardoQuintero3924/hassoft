@@ -42,12 +42,7 @@ if(isset($_POST['Registrar'])){
     }else{
         $errores .= "DEBE INGRESAR EL TELÉFONO";
     }
-    if(!empty($correo)){
-        $correo = trim($correo);
-        $correo = filter_var($correo, FILTER_SANITIZE_EMAIL);
-    }else{
-        $errores .= "DEBE INGRESAR UN CORREO";
-    }
+
     if(!empty($nroHectareas)){
         $nroHectareas = trim($nroHectareas);
         $nroHectareas = filter_var($nroHectareas, FILTER_SANITIZE_NUMBER_INT);

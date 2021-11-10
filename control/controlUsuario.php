@@ -15,9 +15,10 @@ class ControlUsuario{
     }
     public function registroUsuario($usuario){
         try{
-            $sql = "insert into usuario (nombre, clave, estado) values (?, ?, ?)";
+            $sql = "insert into usuario (idUsuario, nombre, clave, estado) values (?, ?, ?, ?)";
             $prep = $this->cnx->prepare($sql);
             $prep->execute([
+                $usuario->GetId(),
                 $usuario->GetNombre(),
                 $usuario->GetClave(),
                 $usuario->GetEstado()
@@ -36,5 +37,14 @@ class ControlUsuario{
             die($ex->getMessage());
         }
         return $usuarios;
+    }
+    public function actualizarEstado($estado, $usuario){
+        try{
+            $sql = "update usuario set Estado = $estado where idUsuario = $usuario";
+            $prep = $this->cnx->prepare($sql);
+            $prep->execute();
+        }catch(PDOException $ex){
+            die($ex->getMessage());
+        }
     }
 }
