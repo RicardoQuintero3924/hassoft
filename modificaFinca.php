@@ -5,10 +5,10 @@ require_once 'control/controlMunicipio.php';
 $codFinca = $_GET['codFinca'];
 $controlFinca = new ControlFinca();
 $finca = $controlFinca->consultaFincaPorId($codFinca);
-$controlPersona = new ControlPersona();
-$personas = $controlPersona->consultaPersona();
-$controlMunicipio = new ControlMunicipio();
-$municipios = $controlMunicipio->consultaMunicipio();
+ $controlPersona = new ControlPersona();
+ $personas = $controlPersona->consultaPersona();
+// $controlMunicipio = new ControlMunicipio();
+// $municipios = $controlMunicipio->consultaMunicipio();
 session_start();
 $varsesion = $_SESSION['usuario'];
 error_reporting(0);
@@ -16,6 +16,53 @@ if ($varsesion == null || $varsesion == '') {
     echo '<script type="text/javascript"> alert("USTED NO TIENE AUTORIZACIÓN")</script>';
     die();
     header('location:index.php');
+}
+$errores = "";
+if(isset($_POST['Modificar'])){
+    $nombre = $_POST['nombre'];
+    $direccion = $_POST['direccion'];
+    $telefono = $_POST['telefono'];
+    $correo = $_POST['correo'];
+    $nHectareas = $_POST['hectareas'];
+    $municipio = $_POST['municipio'];
+    $estado = $_POST['estado'];
+    $persona = $_Post['persona'];
+
+    if(!empty($nombre)){
+        $nombre = trim($nombre);
+        $nombre = filter_var($nombre, FILTER_SANITIZE_STRING);
+    }else{
+        $errores .= "Debe Ingresar el Nombre";
+    }
+
+    if(!empty($direccion)){
+        $direccion = trim($direccion);
+        $direccion = filter_var($direccion, FILTER_SANITIZE_STRING);
+    }else{
+        $errores .= "Debe Ingresar la Dirección";
+    }
+
+    if(!empty($telefono)){
+        $telefono = trim($telefono);
+        $telefonp = filter_var($telefono, FILTER_SANITIZE_NUMBER_INT);
+    }else{
+        $errores -= "Debe Ingresar el Telefono";
+    }
+
+    if(!empty($nHectareas)){
+        $nHectareas = trim($nHectareas);
+        $nHectareas = filter_var($nHectareas, FILTER_SANITIZE_NUMBER_INT);
+    }else{
+        $errores .= "debe ingresar las hectareas";
+    }
+    
+    if(!$errores){
+        $finca = new Finca($nombre, $direccion, $telefono, $correo, $nHectareas, $municipio, $estado, $persona);
+        $actualiza = $controlFinca->actualizaFinca($finca);
+        echo '<script type="text/javascript"> alert("REGISTRO MODIFICADO CON ÉXITO")</script>';
+    }else{
+        echo '<script type="text/javascript"> alert("Error: Por favor intente nuevamente")</script>';
+    }
 }
 
 
@@ -77,38 +124,43 @@ if ($varsesion == null || $varsesion == '') {
             <?php foreach($finca as $fin):  ?>
             <h3><a href=""><i class="fas fa-tree"></i></a>FINCA</h3>
             <label for="nombre">Nombre <span style="color: red">*</span></label>
-            <input type="text" value="<?php $fin->nombre ?>" name="nombre" id="nombre" placeholder="Nombre" onkeyup="validacionRequire(this)" required>
+            <input type="text" value="<?= $fin->nombre ?>" name="nombre" id="nombre" placeholder="Nombre" onkeyup="validacionRequire(this)" required>
             <label for="direccion">Dirección <span style="color: red">*</span></label>
-            <input type="text" name="direccion" value="<?php $fin->direccion ?>" id="direccion" placeholder="Dirección" onkeyup="validacionRequire(this)" required>
+            <input type="text" name="direccion" value="<?= $fin->direccion ?>" id="direccion" placeholder="Dirección" onkeyup="validacionRequire(this)" required>
             <label for="telefono">Teléfono fijo <span style="color: red">*</span></label>
-            <input type="number" name="telefono" id="telefono" placeholder="Teléfono" onkeyup="validacionNumeroTelefono(this)" required>
+            <input type="number" name="telefono" value="<?= $fin->telefono ?>" id="telefono" placeholder="Teléfono" onkeyup="validacionNumeroTelefono(this)" required>
             <label for="correo">Correo <span style="color: red">*</span></label>
-            <input type="email" name="correo" id="correo" placeholder="Correo" onkeyup="validacionCorreo(this)" required>
+            <input type="email" name="correo" value="<?= $fin->correo ?>" id="correo" placeholder="Correo" onkeyup="validacionCorreo(this)" required>
             <label for="hectareas">Número Hectáreas <span style="color: red">*</span></label>
-            <input type="number" name="hectareas" id="hectareas" placeholder="Número Hectáreas" onkeyup="validacionRequire(this)" required>
+            <input type="number" name="hectareas" value="<?= $fin->nro_hectareas_cultivadas ?>" id="hectareas" placeholder="Número Hectáreas" onkeyup="validacionRequire(this)" required>
             <label for="municipio">Municipio <span style="color: red">*</span></label>
             <select name="municipio" id="municipio" onchange="validarForm(this.parentNode)" required>
                 <option value="" disabled selected>--Seleccione--</option>
-                <?php foreach($municipios as $town):?>
-                <option value="<?php echo $town->cod_municipio  ?>"><?php echo $town->cod_municipio ." - ". $town->nombre?></option>
-                <?php endforeach;?>
+                <option value="<?= $fin->cod_municipio ?>" selected><?=$fin->cod_municipio?></option>
             </select>
             <label for="estado">Estado <span style="color: red">*</span></label>
             <select name="estado" id="estado" onchange="validarForm(this.parentNode)" required>
                 <option value="" disabled selected>--Seleccione--</option>
-                <option value="1">Activo</option>
+                <?php $state = $fin->estado;
+                    if($state == '1'){?>
+                <option value="<?=$fin->estado ?>" selected>Activo</option>
                 <option value="0">Inactivo</option>
+                <?php } 
+                if($state === '0'){?>
+                <option value="1">Activo</option>
+                <option value="<?=$fin->estado ?>" selected>Inactivo</option>
+                <?php } ?>
             </select>
             <label for="estado">Personas asignadas</label>
             <div style="margin-bottom: 15px">
                 <select class="category related-post form-control" name="personas[]" id="personas" multiple onchange="validarForm(this.parentNode)" required>
-                     <?php foreach($personas as $persona):?>
+                <?php foreach($personas as $persona):?>
                         <option value="<?php echo $persona->cedula ?>"><?php echo $persona->cedula ." - ". $persona->primer_nombre . " ". $persona->primer_apellido ?></option>
-                    <?php endforeach;?>
+                <?php endforeach;?>  
                 </select>
             </div>
             <?php endforeach; ?>
-            <input type="submit" value="REGISTRAR" name="Registrar" class="btn-sesion desabilitarItem" id="submit">
+            <input type="submit" value="Modificar" name="Modificar" class="btn-sesion desabilitarItem" id="submit">
         </form>
     </div>
 

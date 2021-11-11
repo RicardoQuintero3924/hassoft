@@ -75,7 +75,6 @@ body {
     border-color: rgba(10, 240, 22, 0.836);
 }
 #header {
-    
     height: 120px;
     width: 100%;
     background: white;
@@ -130,7 +129,7 @@ body {
 
 #menu ul {
     line-height: 85px;
-    width: 60%;
+    width: 75%;
     float: right;
 }
 

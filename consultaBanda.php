@@ -1,7 +1,6 @@
-<?php
-require_once 'control/controlPerfil.php';
-$controlPerfil = new ControlPerfil();
-$perfiles = $controlPerfil->consultaPerfiles();
+<?php 
+require_once 'control/controlBanda.php';
+require_once 'control/controlFinca.php';
 session_start();
 $varsesion = $_SESSION['usuario'];
 error_reporting(0);
@@ -10,6 +9,9 @@ if ($varsesion == null || $varsesion == '') {
     die();
     header('location:index.php');
 }
+$controlFinca = new ControlFinca();
+$controlBanda = new ControlBanda();
+$bandas = $controlBanda->consultaBandas();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -49,6 +51,8 @@ if ($varsesion == null || $varsesion == '') {
                 <li><a href="persona.php">Persona</a></li>
                 <li><a href="categoria.php">Categoría</a></li>
                 <li><a href="finca.php">Finca</a></li>
+                <li><a href="">Recolección</a></li>
+                <li><a href="vBanda.php">Banda</a></li>
                 <li><a href="perfil.php">Perfiles</a></li>
             </ul>
         </nav>
@@ -58,16 +62,24 @@ if ($varsesion == null || $varsesion == '') {
         <table class="tabla">
             <h2 id="titulo">Consulta Categorías</h2>
             <tr class="celdas">
+                <th>Codigo Banda</th>
                 <th>Descripción</th>
+                <th>Finca</th>
                 <th>Estado</th>
                 <th>Modificar</th>
             </tr>
 
-            <?php foreach ($perfiles as $perfil) :?>
+            <?php foreach ($bandas as $banda) :
+                $id = $banda->cod_finca;
+                $fincas = $controlFinca->consultaFincaPorId($id)?>
                 <tr class="filas">
-                    <td><?= $perfil->descripcion ?></td>
-                    <td><?= $perfil->estado ? 'ACTIVO' : 'INACTIVO' ?></td>
-                    <td><a href="modificaPerfil.php?perfil=<?= $perfil->cod_perfil ?>" class="btn-table">Modificar</a></td>
+                    <td><?= $banda->cod_banda ?></td>
+                    <td><?= $banda->descripcion ?></td>
+                    <?php foreach($fincas as $fin):?>
+                    <td><?= $fin->nombre?></td>
+                    <?php endforeach; ?>
+                    <td><?= $banda->estado ? 'ACTIVO' : 'INACTIVO' ?></td>
+                    <td><a href="modificaBanda.php?codBanda=<?= $banda->cod_banda ?>" class="btn-table">Modificar</a></td>
                 </tr>
             <?php endforeach; ?>
 
