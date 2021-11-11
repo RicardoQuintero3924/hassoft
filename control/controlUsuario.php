@@ -47,4 +47,15 @@ class ControlUsuario{
             die($ex->getMessage());
         }
     }
+    public function consultaUsuarioPorCedula($cedula){
+        try{
+            $sql = "select * from usuario where idUsuario = $cedula";
+            $prep = $this->cnx->prepare($sql);
+            $prep->execute();
+            $usuario = $prep->fetchAll(PDo::FETCH_OBJ);
+        }catch(PDOException $ex){
+            die($ex->getMessage());
+        }
+        return $usuario;
+    }
 }

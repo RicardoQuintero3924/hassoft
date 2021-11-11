@@ -62,7 +62,8 @@ if(isset($_POST['Ingresar'])){
                 <input type="text" name="usuario" id="usuario">
                 <label for="contraseña"> <br><i class="fas fa-unlock-alt" id="icon"></i>Contraseña <span style="color: red">*</span></label>
                 <input type="password" name="contraseña" id="contraseña">
-                <input type="submit" value="Ingresar" name="Ingresar" id="btn">
+                <input type="submit" value="Ingresar" name="Ingresar" id="btn"></br>
+                <a href="recuperaContraseña.php">¿Olvidó su contraseña?</a>
             </form>
     </div>
     

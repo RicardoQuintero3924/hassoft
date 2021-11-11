@@ -72,19 +72,16 @@ if (isset($_GET['perfilEliminar'])) {
                 <th>Descripción</th>
                 <th>Estado</th>
                 <th>Modificar</th>
-                <th></th>
+                <th>Eliminar</th>
             </tr>
 
             <?php foreach ($perfiles as $perfil) :?>
                 <tr class="filas">
                     <td><?= $perfil->descripcion ?></td>
                     <td><?= $perfil->estado ? 'ACTIVO' : 'INACTIVO' ?></td>
-<<<<<<< HEAD
                     <td><a href="modificaPerfil.php?perfil=<?= $perfil->cod_perfil ?>" class="btn-table">Modificar</a></td>
-=======
-                    <td><a href="modificaPersona.php?cedula=<?= $perfil->cod_perfil ?>" class="btn-table">Modificar</a></td>
+                   
                     <td data-toggle="modal" data-target="#exampleModal">Eliminar</td>
->>>>>>> 07a1f980a4dfa6271051f8ac254d85bc16bf1c6a
                 </tr>
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
