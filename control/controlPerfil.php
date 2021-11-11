@@ -54,4 +54,15 @@ class ControlPerfil{
          die($ex->getMessage());
      }
  }
+
+ public function eliminarPerfil($cod_perfil){
+    try{
+        $sql = "update perfil set estado = 0 where cod_perfil = ?";
+        $prep = $this->cnx->prepare($sql);
+        $prep->execute([$cod_perfil]);
+
+    }catch(PDOException $ex){
+        die($ex->getMessage());
+    }
+}
 }
