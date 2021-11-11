@@ -47,7 +47,24 @@ class ControlPerfil{
      }
      return $perfiles;
  }
+ public function actualizaFinca($finca){
+    try{
+       $sql= 'update finca set nombre = ?, direccion = ?, telefono = ?, correo = ?, nro_hectareas_cultivadas = ?, estado = ?, cod_municipio = ? where cod_finca = ?';
+    }catch(PDOException $ex){
+        die($ex->getMessage());
+    }
+}
 
+public function eliminarPerfil($cod_perfil){
+   try{
+       $sql = "update perfil set estado = 0 where cod_perfil = ?";
+       $prep = $this->cnx->prepare($sql);
+       $prep->execute([$cod_perfil]);
+
+   }catch(PDOException $ex){
+       die($ex->getMessage());
+   }
+}
  
  
 }

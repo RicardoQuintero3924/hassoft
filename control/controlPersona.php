@@ -55,6 +55,7 @@ class controlPersona{
         }
         return $persona;
     }
+
     public function actualizarPersona($persona){
         try{
             if ($persona->GetEstado() == 0) {
@@ -75,6 +76,17 @@ class controlPersona{
                 // $persona->GetEstado(),
                 $persona->GetCedula()
             ]);
+
+        }catch(PDOException $ex){
+            die($ex->getMessage());
+        }
+    }
+
+    public function eliminarPersona($cedula){
+        try{
+            $sql = "update persona set estado = 0 where cedula = ?";
+            $prep = $this->cnx->prepare($sql);
+            $prep->execute([$cedula]);
 
         }catch(PDOException $ex){
             die($ex->getMessage());
