@@ -54,7 +54,9 @@ try {
     // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
     $mail->send();
-    echo '<script type="text/javascript"> alert("Mensaje Enviado con Exito a su correo electronico")</script>';
+    echo '<script type="text/javascript"> alert("Mensaje Enviado con Exito a su correo electronico")
+    window.history.go(-1);
+    </script>';
     // header("location:index.php");
 } catch (Exception $e) {
     echo "Error al enviar el mensaje: {$mail->ErrorInfo}";
