@@ -74,4 +74,17 @@ class ControlFinca
             die($ex->getMessage());
         }
     }
+    
+    public function consultaUltimoRegistro(){
+        try{
+            $sql = "select * from finca order by cod_finca desc limit 1";
+            $prep = $this->cnx->prepare($sql);
+            $prep->execute();
+            $banda = $prep->fetchAll(PDO::FETCH_OBJ);
+        }catch(PDOException $ex){
+            die($ex->getMessage());
+        }
+        return $banda;
+    }
+
 }

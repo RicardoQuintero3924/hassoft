@@ -3,7 +3,7 @@ require_once 'control/controlBanda.php';
 require_once 'control/controlFinca.php';
 session_start();
 $varsesion = $_SESSION['usuario'];
-//error_reporting(1);
+error_reporting(1);
 if ($varsesion == null || $varsesion == '') {
     echo '<script type="text/javascript"> alert("USTED NO TIENE AUTORIZACIÓN")</script>';
     die();
@@ -90,7 +90,7 @@ if(isset($_POST['Registrar'])){
                 <li><a href="persona.php">Persona</a></li>
                 <li><a href="categoria.php">Categoría</a></li>
                 <li><a href="finca.php">Finca</a></li>
-                <li><a href="">Recolección</a></li>
+                <li><a href="vRecoleccion.php">Recolección</a></li>
                 <li><a href="consultaBanda.php">Consulta Banda</a></li>
                 <li><a href="perfil.php">Perfiles</a></li>
             </ul>

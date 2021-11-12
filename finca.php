@@ -1,10 +1,17 @@
 <?php
 require_once 'control/controlMunicipio.php';
 require_once 'control/controlPersona.php';
+require_once 'control/controlFinca.php';
 $controlMunicipio = new ControlMunicipio();
 $controlPersona = new ControlPersona();
 $personas = $controlPersona->consultaPersona();
 $municipios = $controlMunicipio->consultaMunicipio();
+$controlFinca = new ControlFinca();
+$finca = $controlFinca->consultaUltimoRegistro();
+foreach($finca as $fin){
+    $codFinca = $fin->cod_finca;
+}
+$codFinca = $codFinca +1;
 session_start();
 $varsesion = $_SESSION['usuario'];
 error_reporting(0);
@@ -52,16 +59,22 @@ if(isset($_POST['Registrar'])){
     if($municipio == ""){
         $errores .= "DEBE SELECCIONAR UN MUNICIPIO";
     }
+    
   
     if(!$errores){
-        require_once 'control/controlFinca.php';
-        $controlFinca = new ControlFinca();
+        require_once 'modelo/fincaPersona.php';
+        require_once 'control/controlFincaPersona.php';
+        $controlFincaPersona = new ControlFincaPersona();
+        foreach($personas as $per){
+            $controlFincaPersona->AgregarFincaPersona($codFinca, $per);
+        }
         $finca = new Finca($nombre, $direccion, $telefono, $correo, $nroHectareas, $municipio, $estado, $personas);
         $controlFinca->registroFinca($finca);
         echo '<script type="text/javascript"> alert("REGISTRO ALMACENADO CON ÉXITO")</script>';
     }else{
         echo '<script type="text/javascript"> alert("POR FAVOR DILIGENCIE TODOS LOS CAMPOS")</script>';
     }
+    
 }
 ?>
 <!DOCTYPE html>

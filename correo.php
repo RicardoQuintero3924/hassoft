@@ -49,7 +49,7 @@ try {
 
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
-    $mail->Subject = 'Recuperacion Cuenta Hassoft';
+    $mail->Subject = 'Recuperacion Cuenta Hassoft (Ver en privado)';
     $mail->Body    = "$nombre su clave de acceso es: $clave ";
     // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 

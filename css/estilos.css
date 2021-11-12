@@ -41,7 +41,7 @@ body {
     margin-top: 10px;
 }
 .formulario label{
-   text-transform: uppercase;
+   /* text-transform: uppercase; */
    font-weight: 500;
    font-size: 20px;
    text-shadow: 0 0 1.8px;
@@ -384,7 +384,7 @@ input[type="text"]:focus{
 }
 
 .form{
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     font-size: bold;
     color: #444;
     text-shadow: 0 0 1px;
