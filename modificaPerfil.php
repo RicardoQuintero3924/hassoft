@@ -74,7 +74,9 @@ if(isset($_POST['Modificar'])){
                 <li><a href="persona.php">Persona</a></li>
                 <li><a href="categoria.php">Categoría</a></li>
                 <li><a href="finca.php">Finca</a></li>
-                <li><a href="consultaPerfil.php">Consulta Perfiles</a></li>
+                <li><a href="">Recolección</a></li>
+                <li><a href="vBanda.php">Banda</a></li>
+                <li><a href="perfil.php">Perfiles</a></li>
             </ul>
         </nav>
     </div>
@@ -82,7 +84,7 @@ if(isset($_POST['Modificar'])){
     <p style="float: right; margin-right: 10px">Los campos con (<span style="color: red">*</span>) son obligatorios</p>
     <div class="bloque">
        
-        <form action="" method="post" class="form">
+        <form action="" method="post" class="form" id="form">
             <h3><a href=""><i class="fas fa-users"></i></a>PERFIL</h3>
         <?php foreach($perfiles as $perf): ?>
             <label for="descripcion">Descripción <span style="color: red">*</span></label>
@@ -115,6 +117,9 @@ if(isset($_POST['Modificar'])){
     </footer>
         
     <script src="validacion/validacion.js"></script>
+    <script>
+        validarForm(document.getElementById("form"));
+    </script>
 </body>
 
 </html>

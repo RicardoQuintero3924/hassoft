@@ -35,4 +35,15 @@ class ControlMunicipio{
      }
      return $municipios;
  }
+ 
+ public function consultaMunicipioPorId2($id){
+     try{
+        $sql = "select nombre from municipio where cod_municipio = $id";
+        $prep = $this->cnx->prepare($sql);
+        $prep->execute();
+        return $prep->fetchObject();
+     }catch(PDOException $ex){
+         die($ex->getMessage());
+     }
+ }
 }

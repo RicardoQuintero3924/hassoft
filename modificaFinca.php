@@ -2,8 +2,10 @@
 require_once 'control/controlFinca.php';
 require_once 'control/controlPersona.php';
 require_once 'control/controlMunicipio.php';
+require_once 'control/controlFincaPersona.php';
 $codFinca = $_GET['codFinca'];
 $controlFinca = new ControlFinca();
+$controlFincaPersona = new ControlFincaPersona();
 $finca = $controlFinca->consultaFincaPorId($codFinca);
  $controlPersona = new ControlPersona();
  $personas = $controlPersona->consultaPersona();
@@ -11,6 +13,7 @@ $finca = $controlFinca->consultaFincaPorId($codFinca);
 // $municipios = $controlMunicipio->consultaMunicipio();
 session_start();
 $varsesion = $_SESSION['usuario'];
+$personasSelecionadas = $controlFincaPersona->BuscarPersonasPorCodFinca($codFinca);
 //error_reporting(0);
 if ($varsesion == null || $varsesion == '') {
     echo '<script type="text/javascript"> alert("USTED NO TIENE AUTORIZACIÓN")</script>';
@@ -26,7 +29,7 @@ if(isset($_POST['Modificar'])){
     $nHectareas = $_POST['hectareas'];
     $municipio = $_POST['municipio'];
     $estado = $_POST['estado'];
-    $persona = $_POST['personas'];
+    $personas = $_POST['personas'];
 
     if(!empty($nombre)){
         $nombre = trim($nombre);
@@ -57,6 +60,21 @@ if(isset($_POST['Modificar'])){
     }
     
     if(!$errores){
+        require_once 'control/controlFincaPersona.php';
+        $controlFincaPersona = new ControlFincaPersona();
+        $arrayPerosnasExistentes = $controlFincaPersona->BuscarPersonasPorCodFinca($codFinca);
+        foreach($personas as $per){
+            if (array_search($per, $arrayPerosnasExistentes) === false) {
+                $controlFincaPersona->AgregarFincaPersona($codFinca, $per);
+            }
+        }
+
+        foreach($arrayPerosnasExistentes as $per){
+            if (array_search($per, $personas) === false) {
+                $controlFincaPersona->EliminarFincaPersona($codFinca, $per);
+            }
+        }
+
         $finca = new Finca($codFinca, $nombre, $direccion, $telefono, $correo, $nHectareas, $municipio, $estado);
         $actualiza = $controlFinca->actualizaFinca($finca);
         echo '<script type="text/javascript"> alert("REGISTRO MODIFICADO CON ÉXITO")</script>';
@@ -112,7 +130,9 @@ if(isset($_POST['Modificar'])){
                 <li><a href="paginaPpal.php">Inicio</a></li>
                 <li><a href="persona.php">Persona</a></li>
                 <li><a href="categoria.php">Categoría</a></li>
-                <li><a href="consultaFinca.php">Consulta Finca</a></li>
+                <li><a href="finca.php">Finca</a></li>
+                <li><a href="">Recolección</a></li>
+                <li><a href="vBanda.php">Banda</a></li>
                 <li><a href="perfil.php">Perfiles</a></li>
             </ul>
         </nav>
@@ -120,7 +140,7 @@ if(isset($_POST['Modificar'])){
     <div class="clearfix"></div>
     <p style="float: right; margin-right: 10px">Los campos con (<span style="color: red">*</span>) son obligatorios</p>
     <div class="bloque">
-        <form action="" method="post" class="form">
+        <form action="" id="form" method="post" class="form">
             <?php foreach($finca as $fin):  ?>
             <h3><a href=""><i class="fas fa-tree"></i></a>FINCA</h3>
             <label for="nombre">Nombre <span style="color: red">*</span></label>
@@ -129,8 +149,8 @@ if(isset($_POST['Modificar'])){
             <input type="text" name="direccion" value="<?= $fin->direccion ?>" id="direccion" placeholder="Dirección" onkeyup="validacionRequire(this)" required>
             <label for="telefono">Teléfono fijo <span style="color: red">*</span></label>
             <input type="number" name="telefono" value="<?= $fin->telefono ?>" id="telefono" placeholder="Teléfono" onkeyup="validacionNumeroTelefono(this)" required>
-            <label for="correo">Correo <span style="color: red">*</span></label>
-            <input type="email" name="correo" value="<?= $fin->correo ?>" id="correo" placeholder="Correo" onkeyup="validacionCorreo(this)" required>
+            <label for="correo">Correo</label>
+            <input type="email" name="correo" value="<?= $fin->correo ?>" id="correo" placeholder="Correo" onkeyup="validacionCorreo(this)">
             <label for="hectareas">Número Hectáreas <span style="color: red">*</span></label>
             <input type="number" name="hectareas" value="<?= $fin->nro_hectareas_cultivadas ?>" id="hectareas" placeholder="Número Hectáreas" onkeyup="validacionRequire(this)" required>
             <label for="municipio">Municipio <span style="color: red">*</span></label>
@@ -151,11 +171,11 @@ if(isset($_POST['Modificar'])){
                 <option value="<?=$fin->estado ?>" selected>Inactivo</option>
                 <?php } ?>
             </select>
-            <label for="estado">Personas asignadas</label>
+            <label for="estado">Personas asignadas <span style="color: red">*</span></label>
             <div style="margin-bottom: 15px">
                 <select class="category related-post form-control" name="personas[]" id="personas" multiple onchange="validarForm(this.parentNode)" required>
                 <?php foreach($personas as $persona):?>
-                        <option value="<?php echo $persona->cedula ?>"><?php echo $persona->cedula ." - ". $persona->primer_nombre . " ". $persona->primer_apellido ?></option>
+                        <option <?php echo array_search($persona->cedula, $personasSelecionadas) !== false ? "selected" : null ?> value="<?php echo $persona->cedula ?>"><?php echo $persona->cedula ." - ". $persona->primer_nombre . " ". $persona->primer_apellido ?></option>
                 <?php endforeach;?>  
                 </select>
             </div>
@@ -178,6 +198,7 @@ if(isset($_POST['Modificar'])){
         $(document).ready(function() {
             $('.category').select2();
         });
+        validarForm(document.getElementById("form"));
     </script>
 </body>
 

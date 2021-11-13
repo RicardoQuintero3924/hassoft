@@ -98,8 +98,10 @@ if(isset($_POST['Modificar'])){
             <ul>
                 <li><a href="paginaPpal.php">Inicio</a></li>
                 <li><a href="persona.php">Persona</a></li>
-                <li><a href="consultaCategoria.php">Consulta Categorías</a></li>
+                <li><a href="categoria.php">Categoría</a></li>
                 <li><a href="finca.php">Finca</a></li>
+                <li><a href="">Recolección</a></li>
+                <li><a href="vBanda.php">Banda</a></li>
                 <li><a href="perfil.php">Perfiles</a></li>
             </ul>
         </nav>
@@ -107,7 +109,7 @@ if(isset($_POST['Modificar'])){
     <div class="clearfix"></div>
     <div class="bloque">
         <?php foreach($categoria as $cate): ?>
-        <form action="" method="post" class="form">
+        <form action="" method="post" id="form" class="form">
             <h3><a href=""><i class="far fa-id-card"></i></a>CATEGORÍA</h3>
             <label for="nombre">Nombre <span style="color: red">*</span></label>
             <input type="text" name="nombre" value="<?= $cate->nombre ?>" id="nombre" placeholder="Nombre" onkeyup="validacionRequire(this)" required>
@@ -125,7 +127,7 @@ if(isset($_POST['Modificar'])){
                 <option value="<?= $cate->estado ?>" selected>Inactivo</option>
             </select>
         <?php endforeach;?>
-            <input type="submit" value="Modificar" name="Modificar" class="btn-sesion">
+            <input type="submit" value="Modificar" name="Modificar" class="btn-sesion desabilitarItem" id="submit">
         </form>
     </div>
 
@@ -138,6 +140,9 @@ if(isset($_POST['Modificar'])){
     </footer>
 
     <script src="validacion/validacion.js"></script>
+    <script>
+        validarForm(document.getElementById("form"));
+    </script>
 </body>
 
 </html>

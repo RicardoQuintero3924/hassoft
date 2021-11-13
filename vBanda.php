@@ -84,7 +84,7 @@ if(isset($_POST['Registrar'])){
     </header>
     <div id="slider" class="slider-big">
         <!--Menu-->
-        <nav id="menu">
+        <nav id="menu" style="width: 75%">
             <ul>
                 <li><a href="paginaPpal.php">Inicio</a></li>
                 <li><a href="persona.php">Persona</a></li>
@@ -101,7 +101,7 @@ if(isset($_POST['Registrar'])){
     <div class="bloque">
         <form action="" method="post" class="form">
             <h3><a href=""><i class="fas fa-tree"></i></a>Banda</h3>
-            <label for="banda">Codigo Banda<span style="color: red">*</span></label>
+            <label for="banda">Código Banda<span style="color: red">*</span></label>
             <?php foreach($uBanda as $ban) : 
                   $cUlt = $ban->cod_finca; 
                   $ultimo = $cUlt + 1;?>

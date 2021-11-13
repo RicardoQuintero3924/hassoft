@@ -125,9 +125,11 @@ if(isset($_POST['Modificar'])){
         <nav id="menu">
             <ul>
                 <li><a href="paginaPpal.php">Inicio</a></li>
-                <li><a href="Consultapersona.php">Consulta Persona</a></li>
+                <li><a href="persona.php">Persona</a></li>
                 <li><a href="categoria.php">Categoría</a></li>
                 <li><a href="finca.php">Finca</a></li>
+                <li><a href="">Recolección</a></li>
+                <li><a href="vBanda.php">Banda</a></li>
                 <li><a href="perfil.php">Perfiles</a></li>
             </ul>
         </nav>
@@ -138,7 +140,7 @@ if(isset($_POST['Modificar'])){
         <?php foreach($persona as $person) :
              $idF = $person->cod_perfil;
              $perfil = $controlPerfil->consultaPerfilesPorId($idF);?>
-        <form action="" method="post" class="form">
+        <form action="" method="post" class="form" id="form">
             <h3><a href=""><i class="far fa-user"></i></a>Modificar Persona</h3>
             <label for="cedula">Cédula <span style="color: red">*</span></label>
             <input type="number" name="cedula" value="<?= $person->cedula ?>" id="cedula" placeholder="Cédula" onkeyup="validacionRequire(this)" required>
@@ -187,6 +189,10 @@ if(isset($_POST['Modificar'])){
     </footer>
         
     <script src="validacion/validacion.js"></script>
+
+    <script>
+        validarForm(document.getElementById("form"));
+    </script>
 </body>
 
 </html>

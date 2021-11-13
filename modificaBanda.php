@@ -102,7 +102,7 @@ if(isset($_POST['Modificar'])){
     <p style="float: right; margin-right: 10px">Los campos con (<span style="color: red">*</span>) son obligatorios</p>
     <div class="bloque">
         <?php foreach($banda as $ban): ?>
-        <form action="" method="post" class="form">
+        <form action="" method="post" class="form" id="form">
             <h3><a href=""><i class="fas fa-tree"></i></a>Banda</h3>
             <label for="banda">Codigo Banda<span style="color: red">*</span></label>
             <input type="text" value="<?= $ban->cod_banda ?>" name="banda" id="banda" placeholder="proximo codigo 00<?=$ultimo?>" onkeyup="validacionRequire(this)" required>
@@ -150,6 +150,7 @@ if(isset($_POST['Modificar'])){
         $(document).ready(function() {
             $('.category').select2();
         });
+        validarForm(document.getElementById("form"));
     </script>
 </body>
 

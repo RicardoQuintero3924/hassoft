@@ -52,6 +52,8 @@ if ($varsesion == null || $varsesion == '') {
                 <li><a href="persona.php">Persona</a></li>
                 <li><a href="categoria.php">Categoría</a></li>
                 <li><a href="finca.php">Finca</a></li>
+                <li><a href="">Recolección</a></li>
+                <li><a href="vBanda.php">Banda</a></li>
                 <li><a href="perfil.php">Perfiles</a></li>
             </ul>
         </nav>
@@ -83,9 +85,7 @@ if ($varsesion == null || $varsesion == '') {
                     <td><?= $finca->telefono?></td>
                     <td><?= $finca->correo?></td>
                     <td><?= $finca->nro_hectareas_cultivadas?></td>
-                    <?php foreach($municipios as $municipio):?>
-                    <td><?= $municipio->nombre?></td>
-                    <?php endforeach; ?>
+                    <td><?= $controlMunicipio->consultaMunicipioPorId2($finca->cod_municipio)->nombre ?></td>
                     <td><?= $finca->estado ? 'ACTIVO' : 'INACTIVO' ?></td>
                     <td><a href="modificaFinca.php?codFinca=<?= $finca->cod_finca ?>" class="btn-table">Modificar</a></td>
                 </tr>

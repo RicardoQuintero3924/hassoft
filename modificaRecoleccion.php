@@ -48,7 +48,7 @@ $codRecoleccion = $_GET['codRecoleccion'];
     <div class="clearfix"></div>
     <p style="float: right; margin-right: 10px">Los campos con (<span style="color: red">*</span>) son obligatorios</p>
     <div class="bloque">
-        <form action="" method="post" class="form">
+        <form action="" method="post" class="form" id="form">
             <h3><a href=""><i class="far fa-user"></i></a>Recolección</h3>
             <label for="recoleccion">Codigo Recolección <span style="color: red">*</span></label>
             <?php foreach($recolecciones as $recoleccion): 
@@ -91,6 +91,10 @@ $codRecoleccion = $_GET['codRecoleccion'];
     </footer>
         
     <script src="validacion/validacion.js"></script>
+
+    <script>
+        validarForm(document.getElementById("form"));
+    </script>
 </body>
 
 </html>
