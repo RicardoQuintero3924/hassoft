@@ -75,7 +75,7 @@ if ($varsesion == null || $varsesion == '') {
                     <td><?= $categoria->descripcion ?></td>
                     <td><?= $categoria->peso_inicial ." Gr"?></td>
                     <td><?= $categoria->peso_final ." Gr" ?></td>
-                    <td><?= $categoria->estado ? 'ACTIVO' : 'NO' ?></td>
+                    <td><?= $categoria->estado ? 'ACTIVO' : 'INACTIVO' ?></td>
                     <td><a href="modificaCategoria.php?categoria=<?= $categoria->cod_categoria ?>" class="btn-table">Modificar</a></td>
                 </tr>
             <?php endforeach; ?>

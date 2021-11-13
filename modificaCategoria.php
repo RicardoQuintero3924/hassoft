@@ -122,9 +122,14 @@ if(isset($_POST['Modificar'])){
             <label for="estado">Estado <span style="color: red">*</span></label>
             <select name="estado" id="estado" onchange="validarForm(this.parentNode)" required>
                 <option value="" disabled selected>--Seleccione--</option>
-                <?php if($cate->estado == 1) ?>
-                <option value="<?= $cate->estado ?>" selected>Activo</option>
-                <option value="<?= $cate->estado ?>" selected>Inactivo</option>
+                <?php $estadoA = $cate->estado;
+                if($estadoA == '1'){?>
+                <option value="1" selected><?= $cate->estado." "."Activo" ?></option>
+                <option value="0" >Inactivo </option>
+                <?php }else if($estadoA == '0'){ ?>
+                <option value="0" selected><?= $cate->estado." "."Inactivo"?></option>
+                <option value="1" >Activo</option>  
+                <?php }?>
             </select>
         <?php endforeach;?>
             <input type="submit" value="Modificar" name="Modificar" class="btn-sesion desabilitarItem" id="submit">
