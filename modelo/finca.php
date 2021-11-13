@@ -1,5 +1,6 @@
 <?php
 class Finca{
+    private $codFinca;
     private $nombre;
     private $direccion;
     private $telefono;
@@ -7,10 +8,11 @@ class Finca{
     private $nroHectareas;
     private $municipio;
     private $estado;
-    private $personas;
+    
 
-    public function __construct($nombre, $direccion, $telefono, $correo, $nroHectareas, $municipio, $estado, $personas)
+    public function __construct($codFinca, $nombre, $direccion, $telefono, $correo, $nroHectareas, $municipio, $estado)
     {
+        $this->codFinca = $codFinca;
         $this->nombre = $nombre;
         $this->direccion = $direccion;
         $this->telefono = $telefono;
@@ -18,7 +20,10 @@ class Finca{
         $this->nroHectareas = $nroHectareas;
         $this->municipio = $municipio;
         $this->estado = $estado;
-        $this->personas = $personas;
+        
+    }
+    public function GetFinca(){
+        return $this->codFinca;
     }
     public function GetNombre(){
         return $this->nombre;
@@ -62,7 +67,5 @@ class Finca{
     public function SetEstado($estado){
         $this->estado = $estado;
     }
-    public function GetPersonas(){
-        return $this->personas;
-    }
+  
 }

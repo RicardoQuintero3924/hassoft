@@ -6,7 +6,7 @@ $controlFinca = new ControlFinca();
 $fincas = $controlFinca->consultaFinca();
 session_start();
 $varsesion = $_SESSION['usuario'];
-error_reporting(0);
+//error_reporting(0);
 if ($varsesion == null || $varsesion == '') {
     echo '<script type="text/javascript"> alert("USTED NO TIENE AUTORIZACIÓN")</script>';
     die();
@@ -61,6 +61,7 @@ if ($varsesion == null || $varsesion == '') {
         <table class="tabla">
             <h2 id="titulo">Consulta Categorías</h2>
             <tr class="celdas">
+                <th>Codigo</th>
                 <th>Nombres</th>
                 <th>Dirección</th>
                 <th>Teléfono</th>
@@ -72,9 +73,11 @@ if ($varsesion == null || $varsesion == '') {
             </tr>
 
             <?php foreach ($fincas as $finca) :
+               
                 $id = $finca->cod_finca;
                 $municipios = $controlMunicipio->consultaMunicipioPorId($id);?>
                 <tr class="filas">
+                    <td><?= $finca->cod_finca ?></td>
                     <td><?= $finca->nombre ?></td>
                     <td><?= $finca->direccion ?></td>
                     <td><?= $finca->telefono?></td>

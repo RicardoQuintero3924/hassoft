@@ -22,6 +22,7 @@ if ($varsesion == null || $varsesion == '') {
 }
 $errores = "";
 if(isset($_POST['Registrar'])){
+    
     $nombre = $_POST['nombre'];
     $direccion = $_POST['direccion'];
     $telefono = $_POST['telefono'];
@@ -68,7 +69,7 @@ if(isset($_POST['Registrar'])){
         foreach($personas as $per){
             $controlFincaPersona->AgregarFincaPersona($codFinca, $per);
         }
-        $finca = new Finca($nombre, $direccion, $telefono, $correo, $nroHectareas, $municipio, $estado, $personas);
+        $finca = new Finca(" ", $nombre, $direccion, $telefono, $correo, $nroHectareas, $municipio, $estado, $personas);
         $controlFinca->registroFinca($finca);
         echo '<script type="text/javascript"> alert("REGISTRO ALMACENADO CON ÉXITO")</script>';
     }else{

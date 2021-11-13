@@ -7,7 +7,6 @@ class Persona{
     private $sApellido;
     private $celular;
     private $correo;
-   
     private $perfil;
     private $estado;
 

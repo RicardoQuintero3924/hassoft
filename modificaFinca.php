@@ -11,7 +11,7 @@ $finca = $controlFinca->consultaFincaPorId($codFinca);
 // $municipios = $controlMunicipio->consultaMunicipio();
 session_start();
 $varsesion = $_SESSION['usuario'];
-error_reporting(0);
+//error_reporting(0);
 if ($varsesion == null || $varsesion == '') {
     echo '<script type="text/javascript"> alert("USTED NO TIENE AUTORIZACIÓN")</script>';
     die();
@@ -26,7 +26,7 @@ if(isset($_POST['Modificar'])){
     $nHectareas = $_POST['hectareas'];
     $municipio = $_POST['municipio'];
     $estado = $_POST['estado'];
-    $persona = $_Post['persona'];
+    $persona = $_POST['personas'];
 
     if(!empty($nombre)){
         $nombre = trim($nombre);
@@ -57,7 +57,7 @@ if(isset($_POST['Modificar'])){
     }
     
     if(!$errores){
-        $finca = new Finca($nombre, $direccion, $telefono, $correo, $nHectareas, $municipio, $estado, $persona);
+        $finca = new Finca($codFinca, $nombre, $direccion, $telefono, $correo, $nHectareas, $municipio, $estado);
         $actualiza = $controlFinca->actualizaFinca($finca);
         echo '<script type="text/javascript"> alert("REGISTRO MODIFICADO CON ÉXITO")</script>';
     }else{

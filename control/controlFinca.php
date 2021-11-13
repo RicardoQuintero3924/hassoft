@@ -16,9 +16,10 @@ class ControlFinca
     public function registroFinca($finca)
     {
         try {
-            $sql = "insert into finca (nombre, direccion, telefono, correo, nro_hectareas_cultivadas, cod_municipio ,estado) values (?, ?, ?, ?, ?, ?, ?)";
+            $sql = "insert into finca (cod_finca, nombre, direccion, telefono, correo, nro_hectareas_cultivadas, cod_municipio ,estado) values (?, ?, ?, ?, ?, ?, ?, ?)";
             $prep = $this->cnx->prepare($sql);
             $prep->execute([
+                $finca->GetFinca(),
                 $finca->GetNombre(),
                 $finca->GetDireccion(),
                 $finca->GetTelefono(),
@@ -67,8 +68,9 @@ class ControlFinca
                 $finca->GetTelefono(),
                 $finca->GetCorreo(),
                 $finca->GetNroHectareas(),
+                $finca->GetEstado(),
                 $finca->GetMunicipio(),
-                $finca->GetEstado()
+                $finca->GetFinca()
             ]);
         } catch (PDOException $ex) {
             die($ex->getMessage());
