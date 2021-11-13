@@ -63,7 +63,7 @@ if ($varsesion == null || $varsesion == '') {
         <table class="tabla">
             <h2 id="titulo">Consulta Categorías</h2>
             <tr class="celdas">
-                <th>Codigo</th>
+                <th>Código</th>
                 <th>Nombres</th>
                 <th>Dirección</th>
                 <th>Teléfono</th>

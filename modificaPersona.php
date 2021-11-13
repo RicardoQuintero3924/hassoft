@@ -48,12 +48,12 @@ if(isset($_POST['Modificar'])){
     }else{
         $errores .= 'EL CAMPO PRIMER APELLIDO ES REQUERIDO';
     }
-    if(!empty($sapellido)){
-        $sapellido = trim($sapellido);
-        $sapellido = filter_var($sapellido, FILTER_SANITIZE_STRING);
-    }else{
-        $errores .= 'EL CAMPO SEGUNDO APELLIDO ES REQUERIDO';
-    }
+    // if(!empty($sapellido)){
+    //     $sapellido = trim($sapellido);
+    //     $sapellido = filter_var($sapellido, FILTER_SANITIZE_STRING);
+    // }else{
+    //     $errores .= 'EL CAMPO SEGUNDO APELLIDO ES REQUERIDO';
+    // }
     if(!empty($celular)){
         $celular = trim($celular);
         $celular = filter_var($celular, FILTER_SANITIZE_NUMBER_INT);

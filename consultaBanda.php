@@ -62,7 +62,7 @@ $bandas = $controlBanda->consultaBandas();
         <table class="tabla">
             <h2 id="titulo">Consulta Categorías</h2>
             <tr class="celdas">
-                <th>Codigo Banda</th>
+                <th>Código Banda</th>
                 <th>Descripción</th>
                 <th>Finca</th>
                 <th>Estado</th>
