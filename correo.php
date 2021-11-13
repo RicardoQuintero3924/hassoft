@@ -49,12 +49,12 @@ try {
 
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
-    $mail->Subject = 'Recuperacion Cuenta Hassoft (Ver en privado)';
+    $mail->Subject = 'Recuperación Cuenta Hassoft (Ver en privado)';
     $mail->Body    = "$nombre su clave de acceso es: $clave ";
     // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
     $mail->send();
-    echo '<script type="text/javascript"> alert("Mensaje Enviado con Exito a su correo electronico")
+    echo '<script type="text/javascript"> alert("Mensaje enviado con éxito a su correo electrónico")
     window.history.go(-1);
     </script>';
     // header("location:index.php");

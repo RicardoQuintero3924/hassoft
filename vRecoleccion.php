@@ -32,13 +32,13 @@ if(isset($_POST['Registrar'])){
         $codRecoleccion = trim($codRecoleccion);
         $codRecoleccion = filter_var($codRecoleccion, FILTER_SANITIZE_NUMBER_INT);
     }else{
-        $errores .= "Debe Ingresar el Codigo de recoleccion";
+        $errores .= "Debe Ingresar el Codigo de recolección";
     }
     if(!empty($observaciones)){
         $observaciones = trim($observaciones);
         $observaciones = filter_var($observaciones, FILTER_SANITIZE_STRING);
     }else{
-        $errores .= "DEBE INGRESAR LA OBSERVACION";
+        $errores .= "DEBE INGRESAR LA OBSERVACIÓN";
     }
 
     if(!$errores){

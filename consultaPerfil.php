@@ -60,7 +60,7 @@ if (isset($_GET['perfilEliminar'])) {
                 <li><a href="persona.php">Persona</a></li>
                 <li><a href="categoria.php">Categoría</a></li>
                 <li><a href="finca.php">Finca</a></li>
-                <li><a href="">Recolección</a></li>
+                <li><a href="vRecoleccion.php">Recolección</a></li>
                 <li><a href="vBanda.php">Banda</a></li>
                 <li><a href="perfil.php">Perfiles</a></li>
             </ul>
@@ -95,7 +95,7 @@ if (isset($_GET['perfilEliminar'])) {
                                 </button>
                             </div>
                             <div class="modal-body">
-                                ¿Estás seguro que deseas eliminar esta persona?
+                                ¿Estás seguro que desea eliminar esta persona?
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" style="font-weight: bold" onclick="">

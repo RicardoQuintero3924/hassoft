@@ -25,13 +25,13 @@ if(isset($_POST['Modificar'])){
      $codBanda = trim($codBanda);
      $codBanda = filter_var($codBanda, FILTER_SANITIZE_NUMBER_INT);
  }else{
-     $errores .= "DEBE DILIGENCIAR EL CODIGO";
+     $errores .= "DEBE DILIGENCIAR EL CÓDIGO";
  }
  if(!empty($descripcion)){
      $descripcion = trim($descripcion);
      $descripcion = filter_var($descripcion, FILTER_SANITIZE_STRING);
  }else{
-     $errores .= "DEBE DILIGENCIAR LA DESCRIPCION";
+     $errores .= "DEBE DILIGENCIAR LA DESCRIPCIÓN";
  }
 
  if(!$errores){
@@ -92,7 +92,7 @@ if(isset($_POST['Modificar'])){
                 <li><a href="persona.php">Persona</a></li>
                 <li><a href="categoria.php">Categoría</a></li>
                 <li><a href="finca.php">Finca</a></li>
-                <li><a href="">Recolección</a></li>
+                <li><a href="vRecoleccion.php">Recolección</a></li>
                 <li><a href="consultaBanda.php">Consulta Banda</a></li>
                 <li><a href="perfil.php">Perfiles</a></li>
             </ul>
@@ -104,7 +104,7 @@ if(isset($_POST['Modificar'])){
         <?php foreach($banda as $ban): ?>
         <form action="" method="post" class="form" id="form">
             <h3><a href=""><i class="fas fa-tree"></i></a>Banda</h3>
-            <label for="banda">Codigo Banda<span style="color: red">*</span></label>
+            <label for="banda">Código Banda<span style="color: red">*</span></label>
             <input type="text" value="<?= $ban->cod_banda ?>" name="banda" id="banda" placeholder="proximo codigo 00<?=$ultimo?>" onkeyup="validacionRequire(this)" required>
             <label for="descripcion">Descripción <span style="color: red">*</span></label>
             <input type="text" name="descripcion" value="<?= $ban->descripcion ?>" id="descripcion" placeholder="Descripción" onkeyup="validacionRequire(this)" required>

@@ -68,7 +68,7 @@ if ($varsesion == null || $varsesion == '') {
         <table class="tabla">
             <h2 id="titulo">Consulta Personas</h2>
             <tr class="celdas">
-                <th>Codigo Recolección</th>
+                <th>Código Recolección</th>
                 <th>Cantidad Aguacates</th>
                 <th>Fecha Inicio</th>
                 <th>Fehca Final</th>
@@ -108,7 +108,7 @@ if ($varsesion == null || $varsesion == '') {
                                 </button>
                             </div>
                             <div class="modal-body">
-                                ¿Estás seguro que deseas eliminar esta persona?
+                                ¿Estás seguro que desea eliminar esta persona?
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" style="font-weight: bold" onclick="">

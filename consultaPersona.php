@@ -69,7 +69,7 @@ if (isset($_GET['cedulaEliminar'])) {
                 <li><a href="persona.php">Persona</a></li>
                 <li><a href="categoria.php">Categoría</a></li>
                 <li><a href="finca.php">Finca</a></li>
-                <li><a href="">Recolección</a></li>
+                <li><a href="vRecoleccion.php">Recolección</a></li>
                 <li><a href="vBanda.php">Banda</a></li>
                 <li><a href="perfil.php">Perfiles</a></li>
             </ul>
@@ -87,7 +87,7 @@ if (isset($_GET['cedulaEliminar'])) {
                 <th>Correo</th>
                 <th>Estado</th>
                 <th></th>
-                <th></th>
+                <!-- <th></th> -->
             </tr>
 
             <?php foreach ($personas as $persona) : ?>
@@ -99,7 +99,7 @@ if (isset($_GET['cedulaEliminar'])) {
                     <td><?= $persona->correo ?></td>
                     <td><?= $persona->estado ? 'ACTIVO' : 'INACTIVO' ?></td>
                     <td><a href="modificaPersona.php?cedula=<?php echo $persona->cedula ?>" class="btn-table">Modificar</a></td>
-                    <td data-toggle="modal" data-target="#exampleModal">Eliminar</td>
+                    <!-- <td data-toggle="modal" data-target="#exampleModal">Eliminar</td> -->
                 </tr>
 
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -112,7 +112,7 @@ if (isset($_GET['cedulaEliminar'])) {
                                 </button>
                             </div>
                             <div class="modal-body">
-                                ¿Estás seguro que deseas eliminar esta persona?
+                                ¿Estás seguro que desea eliminar esta persona?
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" style="font-weight: bold" onclick="">

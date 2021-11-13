@@ -1,5 +1,49 @@
-<?php 
+<?php
+require_once 'control/controlRecoleccion.php';
+require_once 'control/controlFinca.php';
+require_once 'control/controlCategoria.php';
+$controlRecoleccion = new ControlRecoleecion();
+$controlFinca = new ControlFinca();
+$controlCategoria = new ControlCategoria();
 $codRecoleccion = $_GET['codRecoleccion'];
+$recoleccion = $controlRecoleccion->consultaRecoleccionPorId($codRecoleccion); 
+session_start();
+$varsesion = $_SESSION['usuario'];
+//error_reporting(0);
+if ($varsesion == null || $varsesion == '') {
+    echo '<script type="text/javascript"> alert("USTED NO TIENE AUTORIZACIÓN")</script>';
+    die();
+    header('location:index.php');
+}
+$errores = "";
+if(isset($_POST['Modificar'])){
+    $codRecoleccion = $_POST['recoleccion'];
+    $cantCosecha = $_POST['cantcosecha'];
+    $fechai = $_POST['fechai'];
+    $fechaf = $_POST['fechaf'];
+    $cantRecolectada = $_POST['recolectada'];
+    $observaciones = $_POST['observaciones'];
+    $finca = $_POST['finca'];
+    $estado = $_POST['estado'];
+    $categoria = $_POST['categoria'];
+
+    if(!empty($observaciones)){
+        $observaciones = trim($observaciones);
+        $observaciones = filter_var($observaciones, FILTER_SANITIZE_STRING);
+    }else{
+        $errores .= "DEBE TENER UNA OBSERVACION";
+    }
+
+    if(!$errores){
+        require_once 'modelo/recoleccion.php';
+        $recoleccion = new Recoleccion($codRecoleccion, $cantCosecha, $fechai, $fechaf, $cantRecolectada, $observaciones, $estado, $finca, $categoria);
+        $controlRecoleccion->actualizaRecoleccion($recoleccion);
+        echo '<script type="text/javascript"> alert("REGISTRO MODIFICADO CON ÉXITO")</script>';
+    }else{
+        echo '<script type="text/javascript"> alert("ERROR EN LA MODIFICACION")</script>';
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -50,35 +94,49 @@ $codRecoleccion = $_GET['codRecoleccion'];
     <div class="bloque">
         <form action="" method="post" class="form" id="form">
             <h3><a href=""><i class="far fa-user"></i></a>Recolección</h3>
+            <?php foreach($recoleccion as $reco): ?>
             <label for="recoleccion">Codigo Recolección <span style="color: red">*</span></label>
-            <?php foreach($recolecciones as $recoleccion): 
-                $cod = $recoleccion->cod_recoleccion;
-                $codigo = $cod + 1;?>
-            <input type="number" name="recoleccion" id="recoleccion" placeholder="00<?= $codigo ?>" onkeyup="validacionRequire(this)" required>
-            <?php endforeach;?>
+           
+            <input type="number" name="recoleccion"  value="<?= $reco->cod_recoleccion  ?>" id="recoleccion" placeholder="" onkeyup="validacionRequire(this)" required>
+           
             <label for="cantcosecha">Cantidad Aguacates Cosecha <span style="color: red">*</span></label>
-            <input type="number" name="cantcosecha" id="cantcosecha" placeholder="cantcosecha" onkeyup="validacionRequire(this)" required>
+            <input type="number" name="cantcosecha" value="<?= $reco->cant_cosecha ?>" id="cantcosecha" placeholder="cantcosecha" onkeyup="validacionRequire(this)" required>
             <label for="fechai">Fecha Inicio<span style="color: red">*</span></label>
-            <input type="date" name="fechai" id="fechai" placeholder="Fecha Inicial" onkeyup="validarForm(this.parentNode)">
+            <input type="date" name="fechai" value="<?= $reco->fecha_inicio ?>" id="fechai" placeholder="Fecha Inicial" onkeyup="validarForm(this.parentNode)">
             <label for="fechaf">Fecha Final <span style="color: red">*</span></label>
-            <input type="date" name="fechaf" id="fechaf" placeholder="Fecha Final" onkeyup="validacionRequire(this)" required>
+            <input type="date" name="fechaf" value="<?= $reco->fecha_final ?>" id="fechaf" placeholder="Fecha Final" onkeyup="validacionRequire(this)" required>
             <label for="recolectada">Cantidad Recolectada<span style="color: red">*</span></label>
-            <input type="text" name="recolectada" id="recolectada" placeholder="recolectada" onkeyup="validarForm(this.parentNode)">
+            <input type="text" name="recolectada" value="<?= $reco->cantidad_recolectada ?>" id="recolectada" placeholder="recolectada" onkeyup="validarForm(this.parentNode)">
             <label for="observaciones">Observaciones <span style="color: red">*</span></label>
-            <input type="textarea" name="observaciones" id="observaciones" placeholder="Observaciones" onkeyup="validaForm(this)" required>
+            <input type="textarea" name="observaciones"  value="<?= $reco->observaciones ?>" id="observaciones" placeholder="Observaciones" onkeyup="validaForm(this)" required>
             <label for="finca">Finca<span style="color: red">*</span></label>
             <select name="finca" id="finca">
-            <?php foreach($fincas as $finca): ?>
+            <?php $fincas = $controlFinca->consultaFincaPorId($reco->cod_finca);
+                foreach($fincas as $finca): ?>
                 <option value="<?= $finca->cod_finca ?>"><?= $finca->cod_finca."-".$finca->nombre ?></option>
             <?php endforeach;?>
             </select>
             <label for="categoria">Categoria <span style="color: red">*</span></label>
             <select name="categoria" id="categoria">
-            <?php foreach($categorias as $categoria):?>
+            <?php $categorias = $controlCategoria->consultaCategoriaPorId($reco->cod_clasificacion); 
+            foreach($categorias as $categoria):?>
                 <option value="<?= $categoria->cod_categoria ?>"><?= $categoria->cod_categoria."-".$categoria->nombre ?></option>
             <?php endforeach;?>    
             </select>
-            <input type="submit" value="REGISTRAR" name="Registrar" class="btn-sesion " id="submit">
+            <label for="estado">Estado <span style="color: red">*</span></label>
+            <select name="estado" id="estado" onchange="validarForm(this.parentNode)" required>
+                <option value="" disabled selected>--Seleccione--</option>
+                <?php $estadoA = $reco->estado;
+                if($estadoA == '1'){?>
+                <option value="1" selected><?= $reco->estado." "."Activo" ?></option>
+                <option value="0" >Inactivo </option>
+                <?php }else if($estadoA == '0'){ ?>
+                <option value="0" selected><?= $reco->estado." "."Inactivo"?></option>
+                <option value="1" >Activo</option>  
+                <?php }?>
+            </select>
+            <?php endforeach; ?>
+            <input type="submit" value="Modificar" name="Modificar" class="btn-sesion " id="submit">
         </form>
     </div>
 

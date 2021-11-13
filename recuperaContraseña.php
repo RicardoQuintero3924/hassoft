@@ -35,8 +35,8 @@
     <p style="float: right; margin-right: 10px">Los campos con (<span style="color: red">*</span>) son obligatorios</p>
     <div class="bloque">
         <form action="correo.php" method="post" class="form">
-            <label for="cedula">Cedula <span style="color: red">*</span></label>
-            <input type="number" name="cedula" id="cedula" placeholder="cedula" onkeyup="validacionRequire(this)" required>
+            <label for="cedula">Cédula <span style="color: red">*</span></label>
+            <input type="number" name="cedula" id="cedula" placeholder="Cédula" onkeyup="validacionRequire(this)" required>
             <input type="submit" value="Enviar" name="Enviar" class="btn-sesion " id="submit">
         </form>
     </div>

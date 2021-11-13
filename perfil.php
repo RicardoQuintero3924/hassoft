@@ -16,7 +16,7 @@ if(isset($_POST['Registrar'])){
         $descripcion = trim($descripcion);
         $descripcion = filter_var($descripcion, FILTER_SANITIZE_STRING);
     }else{
-        $errores .= "DEBE DILIGENCIAR LA DESCRIPCION";
+        $errores .= "DEBE DILIGENCIAR LA DESCRIPCIÓN";
     }
    
 
@@ -68,7 +68,7 @@ if(isset($_POST['Registrar'])){
                 <li><a href="persona.php">Persona</a></li>
                 <li><a href="categoria.php">Categoría</a></li>
                 <li><a href="finca.php">Finca</a></li>
-                <li><a href="">Recolección</a></li>
+                <li><a href="vRecoleccion.php">Recolección</a></li>
                 <li><a href="vBanda.php">Banda</a></li>
                 <li><a href="consultaPerfil.php">Consulta Perfiles</a></li>
             </ul>
