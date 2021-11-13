@@ -70,7 +70,7 @@ if(isset($_POST['Registrar'])){
                 <li><a href="finca.php">Finca</a></li>
                 <li><a href="">Recolección</a></li>
                 <li><a href="vBanda.php">Banda</a></li>
-                <li><a href="perfil.php">Perfiles</a></li>
+                <li><a href="consultaPerfil.php">Consulta Perfiles</a></li>
             </ul>
         </nav>
     </div>

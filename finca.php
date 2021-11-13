@@ -117,15 +117,15 @@ if(isset($_POST['Registrar'])){
     </header>
     <div id="slider" class="slider-big">
         <!--Menu-->
-        <nav id="menu">
+        <nav id="menu" style="width: 75%">
             <ul>
                 <li><a href="paginaPpal.php">Inicio</a></li>
                 <li><a href="persona.php">Persona</a></li>
                 <li><a href="categoria.php">Categoría</a></li>
+                <li><a href="consultaFinca.php">Consulta Finca</a></li>
                 <li><a href="">Recolección</a></li>
                 <li><a href="vBanda.php">Banda</a></li>
                 <li><a href="perfil.php">Perfiles</a></li>
-                <li><a href="consultaFinca.php">Consulta Finca</a></li>
             </ul>
         </nav>
     </div>

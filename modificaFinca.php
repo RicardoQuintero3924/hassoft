@@ -130,7 +130,7 @@ if(isset($_POST['Modificar'])){
                 <li><a href="paginaPpal.php">Inicio</a></li>
                 <li><a href="persona.php">Persona</a></li>
                 <li><a href="categoria.php">Categoría</a></li>
-                <li><a href="finca.php">Finca</a></li>
+                <li><a href="consultaFinca.php">Consulta Finca</a></li>
                 <li><a href="">Recolección</a></li>
                 <li><a href="vBanda.php">Banda</a></li>
                 <li><a href="perfil.php">Perfiles</a></li>
