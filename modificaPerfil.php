@@ -74,7 +74,6 @@ if(isset($_POST['Modificar'])){
                 <li><a href="persona.php">Persona</a></li>
                 <li><a href="categoria.php">Categoría</a></li>
                 <li><a href="finca.php">Finca</a></li>
-                <li><a href="vRecoleccion.php">Recolección</a></li>
                 <li><a href="vBanda.php">Banda</a></li>
                 <li><a href="consultaPerfil.php">Consulta Perfiles</a></li>
             </ul>
