@@ -42,6 +42,30 @@ class controlPersona{
             die($ex->getMessage());
         }
         return $personas;
+    
+    }
+    public function consultaPersonaPorEstado($estado){
+        try{
+            $sql = "select * from persona where estado = $estado";
+            $prep = $this->cnx->prepare($sql);
+            $prep->execute();
+            $personas = $prep->fetchAll(PDO::FETCH_OBJ);
+        }catch(PDOException $ex){
+            die($ex->getMessage());
+        }
+        return $personas;
+    }
+    
+    public function consultaPersonaPorPerfil($id){
+        try{
+            $sql = "select * from persona where cod_perfil = $id";
+            $prep = $this->cnx->prepare($sql);
+            $prep->execute();
+            $personas = $prep->fetchAll(PDO::FETCH_OBJ);
+        }catch(PDOException $ex){
+            die($ex->getMessage());
+        }
+        return $personas;
     }
 
     public function consultaPersonaPorId($id){

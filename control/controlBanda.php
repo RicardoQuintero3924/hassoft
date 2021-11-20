@@ -39,6 +39,18 @@ class ControlBanda{
         }
         return $bandas;
     }
+    
+    public function consultaBandasPorEstado($estado){
+        try{
+            $sql = "select * from banda where estado = $estado";
+            $prep= $this->cnx->prepare($sql);
+            $prep->execute();
+            $bandas = $prep->fetchAll(PDO::FETCH_OBJ);
+        }catch(PDOException $ex){
+            die($ex->getMessage());
+        }
+        return $bandas;
+    }
 
     public function consultaBandasPorId($id){
         try{

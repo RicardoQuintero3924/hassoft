@@ -45,6 +45,20 @@ class ControlFinca
         }
         return $fincas;
     }
+    
+    public function consultaFincaPorEstado($estado)
+    {
+        try {
+            $sql = "select * from finca where estado = $estado";
+            $prep = $this->cnx->prepare($sql);
+            $prep->execute();
+            $fincas = $prep->fetchAll(PDO::FETCH_OBJ);
+        } catch (PDOException $ex) {
+            die($ex->getMessage());
+        }
+        return $fincas;
+    }
+
     public function consultaFincaPorId($id)
     {
         try {

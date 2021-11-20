@@ -66,7 +66,7 @@ if(isset($_POST['Modificar'])){
         $controlBanda = new ControlBanda();
         $arrayPerosnasExistentes = $controlFincaPersona->BuscarPersonasPorCodFinca($codFinca);
 
-        if ($estado <= 0 && count($controlBanda->consultaBandasPorId($codFinca)) > 0 ){
+        if ($estado <= 0 && count($controlBanda->consultaBandasPorFinca($codFinca)) > 0 ){
             echo "<script>
                     alert('Tiene bandas que depende de esta finca');
                     window.location.href='modificaFinca.php?codFinca=$codFinca';

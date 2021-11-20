@@ -26,10 +26,24 @@ if(isset($_POST['Modificar'])){
     if(!$errores){
         require_once 'control/controlPerfilA.php';
         require_once 'modelo/aperfil.php';
+        require_once 'control/controlPersona.php';
         $controlPerfilA = new ControlPerfilA();
+        $controlPersona = new controlPersona();
+
+        if ($estado <= 0 && count($controlPersona->consultaPersonaPorPerfil($cPerfil)) > 0 ){
+            echo "<script>
+                    alert('Tiene personas que depende de este perfil');
+                    window.location.href='modificaPerfil.php?perfil=$cPerfil';
+                    </script>";
+                    die();
+        }
+
         $perfil = new ActualizaPerfil($cPerfil, $descripcion, $estado);
         $controlPerfilA->actualizarPerfil($perfil);
-        echo '<script type="text/javascript"> alert("REGISTRO MODIFICADO CON ÉXITO")</script>';
+        echo "<script>
+            alert('REGISTRO MODIFICADO CON ÉXITO');
+            window.location.href='consultaPerfil.php';
+            </script>";
     }else{
         echo '<script type="text/javascript"> alert("Error: Por favor intente nuevamente")</script>';
     }
