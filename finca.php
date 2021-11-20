@@ -4,7 +4,7 @@ require_once 'control/controlPersona.php';
 require_once 'control/controlFinca.php';
 $controlMunicipio = new ControlMunicipio();
 $controlPersona = new ControlPersona();
-$personas = $controlPersona->consultaPersona();
+$personas = $controlPersona->consultaPersonaPorEstado(1);
 $municipios = $controlMunicipio->consultaMunicipio();
 $controlFinca = new ControlFinca();
 $finca = $controlFinca->consultaUltimoRegistro();

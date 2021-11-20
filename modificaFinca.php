@@ -8,7 +8,7 @@ $controlFinca = new ControlFinca();
 $controlFincaPersona = new ControlFincaPersona();
 $finca = $controlFinca->consultaFincaPorId($codFinca);
  $controlPersona = new ControlPersona();
- $personas = $controlPersona->consultaPersona();
+ $personas = $controlPersona->consultaPersonaPorEstado(1);
 // $controlMunicipio = new ControlMunicipio();
 // $municipios = $controlMunicipio->consultaMunicipio();
 session_start();

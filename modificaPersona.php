@@ -16,6 +16,7 @@ if ($varsesion == null || $varsesion == '') {
 $controlPersona = new controlPersona();
 $controlPerfil = new ControlPerfil();
 $controlUsuario = new ControlUsuario();
+$perfiles = $controlPerfil->consultaPerfilesPorEstado(1);
 $id = $_GET['cedula'];
 $persona = $controlPersona->consultaPersonaPorId($id);
 $errores = '';
@@ -158,7 +159,7 @@ if(isset($_POST['Modificar'])){
     <div class="bloque">
         <?php foreach($persona as $person) :
              $idF = $person->cod_perfil;
-             $perfil = $controlPerfil->consultaPerfilesPorId($idF);?>
+            //  $perfil = $controlPerfil->consultaPerfilesPorId($idF);?>
         <form action="" method="post" class="form" id="form">
             <h3><a href=""><i class="far fa-user"></i></a>Modificar Persona</h3>
             <label for="cedula">Cédula <span style="color: red">*</span></label>
@@ -190,8 +191,8 @@ if(isset($_POST['Modificar'])){
             <?php endforeach; ?>
             <label for="perfil">Perfil <span style="color: red">*</span></label>
             <select name="perfil" id="perfil" onchange="validarForm(this.parentNode)" required>
-                <?php foreach($perfil as $per):?>
-                <option value="<?php echo $per->cod_perfil ?>" selected><?= $per->cod_perfil ." ". $per->descripcion?></option>
+                <?php foreach($perfiles as $per):?>
+                <option <?php echo $person->cod_perfil == $per->cod_perfil ? 'selected' : null ?> value="<?php echo $per->cod_perfil ?>"><?= $per->cod_perfil ." ". $per->descripcion?></option>
                 <?php endforeach;?>    
             </select>
             

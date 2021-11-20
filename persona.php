@@ -1,7 +1,7 @@
 <?php
 require_once 'control/controlPerfil.php';
 $controlPerfil = new ControlPerfil();
-$perfiles = $controlPerfil->consultaPerfiles();
+$perfiles = $controlPerfil->consultaPerfilesPorEstado(1);
 session_start();
 $varsesion = $_SESSION['usuario'];
 error_reporting(0);
