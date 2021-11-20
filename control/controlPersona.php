@@ -56,6 +56,18 @@ class controlPersona{
         return $persona;
     }
 
+    public function consultaPersonaFincaPorId($id){
+        try{
+            $sql = "SELECT COUNT(cod_finca) as count, cod_finca, cedula FROM `finca_persona` GROUP by cod_finca HAVING cedula = $id";
+            $prep= $this->cnx->prepare($sql);
+            $prep->execute();
+            $persona = $prep->fetchAll(PDO::FETCH_OBJ);
+        }catch(PDOException $ex){
+            die($ex->getMessage());
+        }
+        return $persona;
+    }
+
     public function actualizarPersona($persona){
         try{
             if ($persona->GetEstado() == 0) {

@@ -68,11 +68,27 @@ if(isset($_POST['Registrar'])){
        $controlPersona = new controlPersona();
        $controlUsuario = new ControlUsuario();
        $persona = new Persona($cedula, $pnombre, $snombre, $papellido, $sapellido, $celular, $correo, $perfil, $estado);
-       $controlPersona->registroPersona($persona);
-       $nombre = $pnombre ." ". $papellido;
-       $usuario = new Usuario($cedula, $nombre, $contraseña, $estado);
-       $controlUsuario->registroUsuario($usuario);
-       echo '<script type="text/javascript"> alert("REGISTRO ALMACENADO CON ÉXITO")</script>';
+    //    var_dump($controlPersona->consultaPersonaPorId($cedula));
+       if (count($controlPersona->consultaPersonaPorId($cedula)) > 0) {
+            echo '<script type="text/javascript"> alert("El usuario que acabas de ingresar ya existe")</script>';
+       } else {
+            // $_POST['Registrar'].preve
+            $controlPersona->registroPersona($persona);
+            $nombre = $pnombre ." ". $papellido;
+            $usuario = new Usuario($cedula, $nombre, $contraseña, $estado);
+            $controlUsuario->registroUsuario($usuario);
+            echo '<script type="text/javascript"> alert("REGISTRO ALMACENADO CON ÉXITO")</script>';
+            $usuario = new Usuario("", "", "", null);
+            $cedula = "";
+            $pnombre = "";
+            $snombre = "";
+            $papellido = "";
+            $sapellido = "";
+            $celular = "";
+            $correo = "";
+            $contraseña = "";
+            $perfil = "";
+       }
     }else{
         echo '<script type="text/javascript"> alert("POR FAVOR DILIGENCIAR TODOS LOS CAMPOS")</script>';
     }
@@ -125,30 +141,29 @@ if(isset($_POST['Registrar'])){
     <div class="clearfix"></div>
     <p style="float: right; margin-right: 10px">Los campos con (<span style="color: red">*</span>) son obligatorios</p>
     <div class="bloque">
-        <form action="" method="post" class="form">
+        <form action="" id="form" method="post" class="form">
             <h3><a href=""><i class="far fa-user"></i></a>Persona</h3>
             <label for="cedula">Cédula <span style="color: red">*</span></label>
-            <input type="number" name="cedula" id="cedula" placeholder="Cédula" onkeyup="validacionRequire(this)" required>
+            <input type="number" name="cedula" value="<?php echo $cedula ? $cedula : '' ?>" id="cedula" placeholder="Cédula" onkeyup="validacionRequire(this)" required>
             <label for="pnombre">Primer Nombre <span style="color: red">*</span></label>
-            <input type="text" name="pnombre" id="pnombre" placeholder="Primer Nombre" onkeyup="validacionRequire(this)" required>
+            <input type="text" name="pnombre" id="pnombre" value="<?php echo $pnombre ? $pnombre : '' ?>" placeholder="Primer Nombre" onkeyup="validacionRequire(this)" required>
             <label for="snombre">Segundo Nombre</label>
-            <input type="text" name="snombre" id="snombre" placeholder="Segundo Nombre" onkeyup="validarForm(this.parentNode)">
+            <input type="text" name="snombre" id="snombre" value="<?php echo $snombre ? $snombre : '' ?>" placeholder="Segundo Nombre" onkeyup="validarForm(this.parentNode)">
             <label for="papellido">Primer Apellido <span style="color: red">*</span></label>
-            <input type="text" name="papellido" id="papellido" placeholder="Primer Apellido" onkeyup="validacionRequire(this)" required>
+            <input type="text" name="papellido" id="papellido" value="<?php echo $papellido ? $papellido : '' ?>" placeholder="Primer Apellido" onkeyup="validacionRequire(this)" required>
             <label for="sapellido">Segundo Apellido</label>
-            <input type="text" name="sapellido" id="sapellido" placeholder="Segundo Apellido" onkeyup="validarForm(this.parentNode)">
+            <input type="text" name="sapellido" id="sapellido" value="<?php echo $sapellido ? $sapellido : '' ?>" placeholder="Segundo Apellido" onkeyup="validarForm(this.parentNode)">
             <label for="celular">Celular <span style="color: red">*</span></label>
-            <input type="number" name="celular" id="celular" placeholder="Celular" onkeyup="validacionNumeroCelular(this)" required>
+            <input type="number" name="celular" id="celular" value="<?php echo $celular ? $celular : '' ?>" placeholder="Celular" onkeyup="validacionNumeroCelular(this)" required>
             <label for="correo">Correo <span style="color: red">*</span></label>
-            <input type="email" name="correo" id="correo" placeholder="Correo" onkeyup="validacionCorreo(this)" placeholder="Correo" required>
+            <input type="email" name="correo" id="correo" value="<?php echo $correo ? $correo : '' ?>" placeholder="Correo" onkeyup="validacionCorreo(this)" placeholder="Correo" required>
             <label for="contraseña">Contraseña <span style="color: red">*</span></label>
-            <input type="text" name="contraseña" id="contraseña" placeholder="Contraseña" onkeyup="validacionRequire(this)" required>
-            <label for="estado">Estado <span style="color: red">*</span></label>
+            <input type="password" name="contraseña" id="contraseña" value="<?php echo $contraseña ? $contraseña : '' ?>" placeholder="Contraseña" onkeyup="validacionRequire(this)" required>
             <label for="perfil">Perfil <span style="color: red">*</span></label>
             <select name="perfil" id="perfil" onchange="validarForm(this.parentNode)" required>
                 <option value="" disabled selected>--Selecione--</option>
                 <?php foreach($perfiles as $perfil):?>
-                <option value="<?php echo $perfil->cod_perfil ?>"><?php echo $perfil->cod_perfil ." - ". $perfil->descripcion ?></option>
+                <option selected value="<?php echo $perfil->cod_perfil ?>"><?php echo $perfil->cod_perfil ." - ". $perfil->descripcion ?></option>
                 <?php endforeach;?>
             </select>
             <input type="submit" value="REGISTRAR" name="Registrar" class="btn-sesion desabilitarItem" id="submit">
@@ -164,6 +179,9 @@ if(isset($_POST['Registrar'])){
     </footer>
         
     <script src="validacion/validacion.js"></script>
+    <script>
+        validarForm(document.getElementById("form"));
+    </script>
 </body>
 
 </html>

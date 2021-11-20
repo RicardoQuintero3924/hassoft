@@ -60,7 +60,12 @@ class ControlFinca
     public function actualizaFinca($finca)
     {
         try {
-            $sql = 'update finca set nombre = ?, direccion = ?, telefono = ?, correo = ?, nro_hectareas_cultivadas = ?, estado = ?, cod_municipio = ? where cod_finca = ?';
+            if ($finca->GetEstado() == 0) {
+                $sql = "update finca set nombre = ?, direccion = ?, telefono = ?, correo = ?, nro_hectareas_cultivadas = ?, estado = 0, cod_municipio = ? where cod_finca = ?";
+            } else {
+                $sql = "update finca set nombre = ?, direccion = ?, telefono = ?, correo = ?, nro_hectareas_cultivadas = ?, estado = 1, cod_municipio = ? where cod_finca = ?";
+            }
+            // $sql = 'update finca set nombre = ?, direccion = ?, telefono = ?, correo = ?, nro_hectareas_cultivadas = ?, estado = ?, cod_municipio = ? where cod_finca = ?';
             $prep = $this->cnx->prepare($sql);
             $prep->execute([
                 $finca->GetNombre(),
@@ -68,7 +73,6 @@ class ControlFinca
                 $finca->GetTelefono(),
                 $finca->GetCorreo(),
                 $finca->GetNroHectareas(),
-                $finca->GetEstado(),
                 $finca->GetMunicipio(),
                 $finca->GetFinca()
             ]);

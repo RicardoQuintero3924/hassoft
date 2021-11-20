@@ -61,8 +61,19 @@ if(isset($_POST['Modificar'])){
     
     if(!$errores){
         require_once 'control/controlFincaPersona.php';
+        require_once  'control/controlBanda.php';
         $controlFincaPersona = new ControlFincaPersona();
+        $controlBanda = new ControlBanda();
         $arrayPerosnasExistentes = $controlFincaPersona->BuscarPersonasPorCodFinca($codFinca);
+
+        if ($estado <= 0 && count($controlBanda->consultaBandasPorId($codFinca)) > 0 ){
+            echo "<script>
+                    alert('Tiene bandas que depende de esta finca');
+                    window.location.href='modificaFinca.php?codFinca=$codFinca';
+                    </script>";
+                    die();
+        }
+
         foreach($personas as $per){
             if (array_search($per, $arrayPerosnasExistentes) === false) {
                 $controlFincaPersona->AgregarFincaPersona($codFinca, $per);
@@ -77,7 +88,10 @@ if(isset($_POST['Modificar'])){
 
         $finca = new Finca($codFinca, $nombre, $direccion, $telefono, $correo, $nHectareas, $municipio, $estado);
         $actualiza = $controlFinca->actualizaFinca($finca);
-        echo '<script type="text/javascript"> alert("REGISTRO MODIFICADO CON ÉXITO")</script>';
+        echo "<script>
+            alert('REGISTRO MODIFICADO CON ÉXITO');
+            window.location.href='consultaFinca.php';
+            </script>";
     }else{
         echo '<script type="text/javascript"> alert("Error: Por favor intente nuevamente")</script>';
     }

@@ -51,6 +51,18 @@ class ControlBanda{
         }
         return $banda;
     }
+    
+    public function consultaBandasPorFinca($id){
+        try{
+            $sql = "select * from banda where cod_finca = $id";
+            $prep = $this->cnx->prepare($sql);
+            $prep->execute();
+            $banda = $prep->fetchAll(PDO::FETCH_OBJ);
+        }catch(PDOException $ex){
+            die($ex->getMessage());
+        }
+        return $banda;
+    }
 
     public function consultaUltimoRegistro(){
         try{

@@ -2,6 +2,7 @@
 require_once 'control/controlPersona.php';
 require_once 'control/controlPerfil.php';
 require_once 'control/controlUsuario.php';
+
 session_start();
 $varsesion = $_SESSION['usuario'];
 // error_reporting(0);
@@ -76,13 +77,32 @@ if(isset($_POST['Modificar'])){
    
     if(!$errores){  
         require_once 'modelo/persona.php';
+        require_once 'control/controlFincaPersona.php';
         $controlPersona = new controlPersona();
+        $controlFincaPersona = new ControlFincaPersona();
+        $result = $controlPersona->consultaPersonaFincaPorId($cedula);
+        if ($estado < 1) {
+            foreach ($result as $key => $value) {
+                if ($value->count <= 1) {
+                    echo "<script>
+                    alert('Tiene fincas que depende de este usuario');
+                    window.location.href='modificaPersona.php?cedula=$cedula';
+                    </script>";
+                    die();
+                }
+                // var_dump($value->count);
+            }
+
+            $controlFincaPersona->EliminarFincaPersonaPorCC($cedula);
+        }
         $persona = new Persona($cedula, $pnombre, $snombre, $papellido, $sapellido, $celular, $correo, $perfil, $estado);
         $controlPersona->actualizarPersona($persona);
         $usuario = $pnombre." ".$papellido;
         $controlUsuario->actualizarEstado($estado, $cedula);
-        echo '<script type="text/javascript"> alert("REGISTRO MODIFICADO CON ÉXITO")</script>';
-        header('location:consultaPersona.php');
+        echo "<script>
+            alert('REGISTRO MODIFICADO CON ÉXITO');
+            window.location.href='consultaPersona.php';
+            </script>";
         
     }else{
         echo '<script type="text/javascript"> alert("POR FAVOR DILIGENCIAR TODOS LOS CAMPOS ")</script>' ."$errores";

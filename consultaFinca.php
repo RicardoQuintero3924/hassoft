@@ -74,7 +74,6 @@ if ($varsesion == null || $varsesion == '') {
             </tr>
 
             <?php foreach ($fincas as $finca) :
-               
                 $id = $finca->cod_finca;
                 $municipios = $controlMunicipio->consultaMunicipioPorId($id);?>
                 <tr class="filas">
