@@ -53,7 +53,10 @@ if(isset($_POST['Modificar'])){
         $categoria = new CategoriaA($codCategoria, $nombre, $pinicial, $pfinal, $descripcion, $estado );
         $controlCategoria = new ControlCategoriaA();
         $controlCategoria->actualizaCategoria($categoria);
-        echo '<script type="text/javascript"> alert("REGISTRO MODIFICADO CON ÉXITO")</script>';
+        echo "<script>
+            alert('REGISTRO MODIFICADO CON ÉXITO');
+            window.location.href='consultaCategoria.php';
+            </script>";
         // header('location:consultaCategoria.php');
     }else{
         echo '<script type="text/javascript"> alert("POR FAVOR DILIGENCIAR TODOS LOS CAMPOS ")</script>' ."$errores";

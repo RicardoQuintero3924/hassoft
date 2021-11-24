@@ -10,6 +10,12 @@ foreach($usuario as $user){
 }
 $controlPersona = new controlPersona();
 $persona = $controlPersona->consultaPersonaPorId($cedula);
+if (count($persona) <= 0) {
+    echo "<script>
+            alert('El usuario que acabas de ingresar no existe');
+            window.location.href='recuperaContraseña.php';
+            </script>";
+}
 foreach($persona as $per){
     $correo = $per->correo;
 }

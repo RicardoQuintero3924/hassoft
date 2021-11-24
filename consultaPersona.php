@@ -5,7 +5,8 @@ require_once 'control/controlUsuario.php';
 require_once 'modelo/persona.php';
 $controlPersona = new controlPersona();
 $controlFinca = new ControlFinca();
-$personas = $controlPersona->consultaPersona();
+$estado = 1;
+$personas = $controlPersona->consultaPersonaPorEstado($estado);
 session_start();
 $varsesion = $_SESSION['usuario'];
 
@@ -24,6 +25,16 @@ function eliminarPersona($cedula) {
 
 if (isset($_GET['cedulaEliminar'])) {
     eliminarPersona($_GET['cedulaEliminar']);
+}
+
+if (isset($_POST['buscarInactivos'])) {
+    $estado = 0;
+    $personas = $controlPersona->consultaPersonaPorEstado($estado);
+}
+
+if (isset($_POST['buscarActivos'])) {
+    $estado = 1;
+    $personas = $controlPersona->consultaPersonaPorEstado($estado);
 }
 
 ?>
@@ -77,7 +88,14 @@ if (isset($_GET['cedulaEliminar'])) {
     <div class="clearfix"></div>
     <div class="separacion">
         <table class="tabla">
-            <h2 id="titulo">Consulta Personas</h2>
+            <div style="position: relative; text-align: center;">
+                <h2 style="display: inline-block" id="titulo">Consulta Personas</h2>
+                <div style="position: absolute; top: -30px; right: 130px;">
+                    <form class="form-inline my-2 my-lg-0" id="form" method="POST" style="text-align: right; margin-top: 25px !important;">
+                        <?php echo $estado == 0 ? '<input type="submit" name="buscarActivos" value="Ver activos" class="btn btn-success" style="max-width: 100%" />' : '<input type="submit" name="buscarInactivos" value="Ver inactivos" class="btn btn-success" style="max-width: 100%" />' ?>
+                    </form>
+                </div>
+            </div>
             <tr class="celdas">
                 <th>Cédula</th>
                 <th>Nombres</th>

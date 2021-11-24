@@ -36,6 +36,19 @@ class ControlPerfil{
      }
      return $perfiles;
  }
+ 
+ public function consultaPerfilesPorEstado($estado){
+    try{
+        $sql = "select * from perfil where estado = $estado";
+        $prep= $this->cnx->prepare($sql);
+        $prep->execute();
+        $perfiles = $prep->fetchAll(PDO::FETCH_OBJ);
+    }catch(PDOException $ex){
+        die($ex->getMessage());
+    }
+    return $perfiles;
+ }
+
  public function consultaPerfilesPorId($id){
      try{
         $sql= "select * from perfil where cod_perfil = $id";
@@ -47,6 +60,7 @@ class ControlPerfil{
      }
      return $perfiles;
  }
+ 
  public function actualizaFinca($finca){
     try{
        $sql= 'update finca set nombre = ?, direccion = ?, telefono = ?, correo = ?, nro_hectareas_cultivadas = ?, estado = ?, cod_municipio = ? where cod_finca = ?';

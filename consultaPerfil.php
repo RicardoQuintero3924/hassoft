@@ -1,7 +1,8 @@
 <?php
 require_once 'control/controlPerfil.php';
 $controlPerfil = new ControlPerfil();
-$perfiles = $controlPerfil->consultaPerfiles();
+$estado = 1;
+$perfiles = $controlPerfil->consultaPerfilesPorEstado($estado);
 session_start();
 $varsesion = $_SESSION['usuario'];
 error_reporting(0);
@@ -19,6 +20,17 @@ function eliminarPerfil($cod_finca) {
 if (isset($_GET['perfilEliminar'])) {
     eliminarPerfil($_GET['perfilEliminar']);
 }
+
+if (isset($_POST['buscarInactivos'])) {
+    $estado = 0;
+    $perfiles = $controlPerfil->consultaPerfilesPorEstado($estado);
+}
+
+if (isset($_POST['buscarActivos'])) {
+    $estado = 1;
+    $perfiles = $controlPerfil->consultaPerfilesPorEstado($estado);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -68,12 +80,19 @@ if (isset($_GET['perfilEliminar'])) {
     <div class="clearfix"></div>
     <div class="separacion">
         <table class="tabla">
-            <h2 id="titulo">Consulta Categorías</h2>
+            <div style="position: relative; text-align: center;">
+                <h2 style="display: inline-block" id="titulo">Consulta Perfiles</h2>
+                <div style="position: absolute; top: -30px; right: 130px;">
+                    <form class="form-inline my-2 my-lg-0" id="form" method="POST" style="text-align: right; margin-top: 25px !important;">
+                        <?php echo $estado == 0 ? '<input type="submit" name="buscarActivos" value="Ver activos" class="btn btn-success" style="max-width: 100%" />' : '<input type="submit" name="buscarInactivos" value="Ver inactivos" class="btn btn-success" style="max-width: 100%" />' ?>
+                    </form>
+                </div>
+            </div>
             <tr class="celdas">
                 <th>Descripción</th>
                 <th>Estado</th>
                 <th>Modificar</th>
-                <th>Eliminar</th>
+                <!-- <th>Eliminar</th> -->
             </tr>
 
             <?php foreach ($perfiles as $perfil) :?>
@@ -82,7 +101,7 @@ if (isset($_GET['perfilEliminar'])) {
                     <td><?= $perfil->estado ? 'ACTIVO' : 'INACTIVO' ?></td>
                     <td><a href="modificaPerfil.php?perfil=<?= $perfil->cod_perfil ?>" class="btn-table">Modificar</a></td>
                    
-                    <td data-toggle="modal" data-target="#exampleModal">Eliminar</td>
+                    <!-- <td data-toggle="modal" data-target="#exampleModal">Eliminar</td> -->
                 </tr>
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">

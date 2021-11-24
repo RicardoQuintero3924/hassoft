@@ -3,7 +3,8 @@ require_once 'control/controlFinca.php';
 require_once 'control/controlMunicipio.php';
 $controlMunicipio = new ControlMunicipio();
 $controlFinca = new ControlFinca();
-$fincas = $controlFinca->consultaFinca();
+$estado = 1;
+$fincas = $controlFinca->consultaFincaPorEstado($estado);
 session_start();
 $varsesion = $_SESSION['usuario'];
 //error_reporting(0);
@@ -12,6 +13,18 @@ if ($varsesion == null || $varsesion == '') {
     die();
     header('location:index.php');
 }
+
+if (isset($_POST['buscarInactivos'])) {
+    $estado = 0;
+    $fincas = $controlFinca->consultaFincaPorEstado($estado);
+}
+
+if (isset($_POST['buscarActivos'])) {
+    $estado = 1;
+    $fincas = $controlFinca->consultaFincaPorEstado($estado);
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -57,10 +70,17 @@ if ($varsesion == null || $varsesion == '') {
             </ul>
         </nav>
     </div>
-    <div class="clearfix"></div>
     <div class="separacion">
         <table class="tabla">
-            <h2 id="titulo">Consulta Categorías</h2>
+        <div class="clearfix"></div>
+            <div style="position: relative;">
+                <h2 style="display: inline-block" id="titulo">Consulta Categorías</h2>
+                <div style="position: absolute; top: -30px; right: 130px;">
+                    <form class="form-inline my-2 my-lg-0" id="form" method="POST" style="text-align: right; margin-bottom: 40px !important; margin-top: 25px !important;">
+                        <?php echo $estado == 0 ? '<input type="submit" name="buscarActivos" value="Ver activos" class="btn btn-success" style="max-width: 100%" />' : '<input type="submit" name="buscarInactivos" value="Ver inactivos" class="btn btn-success" style="max-width: 100%" />' ?>
+                    </form>
+                </div>
+            </div>
             <tr class="celdas">
                 <th>Código</th>
                 <th>Nombres</th>
@@ -74,7 +94,6 @@ if ($varsesion == null || $varsesion == '') {
             </tr>
 
             <?php foreach ($fincas as $finca) :
-               
                 $id = $finca->cod_finca;
                 $municipios = $controlMunicipio->consultaMunicipioPorId($id);?>
                 <tr class="filas">

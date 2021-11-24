@@ -34,6 +34,17 @@ class ControlFincaPersona{
         }
     }
     
+    public function EliminarFincaPersonaPorCC($cedula){
+        try{
+            $sql = "DELETE FROM finca_persona WHERE cedula = $cedula";
+            $prep = $this->cnx->prepare($sql);
+            $prep->execute();
+
+        }catch(PDOException $ex){
+            die($ex->getMessage());
+        }
+    }
+    
     public function BuscarPersonasPorCodFinca($finca){
         try{
             $sql = "select cedula from finca_persona where cod_finca = $finca";

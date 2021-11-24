@@ -25,7 +25,11 @@ if(isset($_POST['Registrar'])){
         $controlPerfil = new ControlPerfil();
         $perfil = new Perfil($descripcion, $estado);
         $controlPerfil->registrarPerfil($perfil);
-        echo '<script type="text/javascript"> alert("REGISTRO ALMACENADO CON ÉXITO")</script>';
+        echo "<script>
+                    alert('REGISTRO ALMACENADO CON ÉXITO');
+                    window.location.href='consultaPerfil.php';
+                    </script>";
+                    die();
     }else{
         echo '<script type="text/javascript"> alert("POR FAVOR DILIGENCIE TODOS LOS CAMPOS")</script>';
     }
