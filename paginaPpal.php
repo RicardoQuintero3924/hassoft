@@ -2,6 +2,12 @@
 session_start();
 $varsesion = $_SESSION['usuario'];
 error_reporting(1);
+require_once 'control/controlClasificacion.php';
+$controlClasificacion = new ControlClasificacion();
+$clasificaciones = $controlClasificacion->consultaClasificaciones();
+
+var_dump($clasificaciones);
+
 if($varsesion == null || $varsesion == ''){
     echo '<script type="text/javascript"> alert("USTED NO TIENE AUTORIZACIÓN")</script>';
     die();
