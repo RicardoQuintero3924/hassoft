@@ -15,6 +15,9 @@ $controlBanda = new ControlBanda();
 $estado = 1;
 $bandas = $controlBanda->consultaBandasPorEstado($estado);
 
+setlocale(LC_ALL, 'es_ES');
+date_default_timezone_set('America/Bogota');
+
 if (isset($_POST['buscarInactivos'])) {
     $estado = 0;
     $bandas = $controlBanda->consultaBandasPorEstado($estado);
@@ -26,7 +29,6 @@ if (isset($_POST['buscarActivos'])) {
 }
 
 if (isset($_POST['crearCategoria'])) {
-    // var_dump($_POST['crearCategoria']);
     require_once 'control/controlClasificacion.php';
     require_once 'modelo/Clasificacion.php';
     $controlClasificacion = new ControlClasificacion();
@@ -35,7 +37,7 @@ if (isset($_POST['crearCategoria'])) {
     require_once 'modelo/BandaReco.php';
     $controlBandaReco = new ControlBandaReco();
 
-    $clasificacion = new Clasificaion(id: null, nroAguacates: $_POST['total'], pesoTotal: $_POST['pesoTotal'], fechaInicial: getdate(), fechaFinal: getdate(), estado: 1, banda: $_POST['codigo'] );
+    $clasificacion = new Clasificaion(id: null, nroAguacates: $_POST['total'], pesoTotal: $_POST['pesoTotal'], fechaInicial: $_POST['fechaInicial'], fechaFinal: date("F j, Y, g:i a"), estado: 1, banda: $_POST['codigo'] );
     $controlClasificacion->registroClasificacion($clasificacion);
     
     $bandaReco = new BandaReco(codBanda: $_POST['codigo'], codClasificacion: null, contador: $_POST['catA'], codCate: 1);
@@ -97,7 +99,7 @@ if (isset($_POST['crearCategoria'])) {
     <div class="separacion">
         <table class="tabla">
             <div style="position: relative; text-align: center;">
-                <h2 style="display: inline-block" id="titulo">Consulta Categorías</h2>
+                <h2 style="display: inline-block" id="titulo">Consultar bandas</h2>
                 <div style="position: absolute; top: -15px; right: 130px;">
                     <form class="form-inline my-2 my-lg-0" id="form" method="POST" style="text-align: right; margin-top: 25px !important;">
                         <?php echo $estado == 0 ? '<input type="submit" name="buscarActivos" value="Ver activos" class="btn btn-success" style="max-width: 100%" />' : '<input type="submit" name="buscarInactivos" value="Ver inactivos" class="btn btn-success" style="max-width: 100%" />' ?>
@@ -110,7 +112,7 @@ if (isset($_POST['crearCategoria'])) {
                 <th>Finca</th>
                 <th>Estado</th>
                 <th>Modificar</th>
-                <th>Encender</th>
+                <?php  echo $estado > 0 ? "<th>Encender</th>" : null?>
             </tr>
 
             <?php foreach ($bandas as $banda) :
@@ -124,7 +126,7 @@ if (isset($_POST['crearCategoria'])) {
                     <?php endforeach; ?>
                     <td><?= $banda->estado ? 'ACTIVO' : 'INACTIVO' ?></td>
                     <td><a href="modificaBanda.php?codBanda=<?= $banda->cod_banda ?>" class="btn-table">Modificar</a></td>
-                    <td style="color: chartreuse"><i class="fas fa-play" style="cursor: pointer" data-toggle="modal" data-target="#banda<?= $banda->cod_banda ?>"></i></td>
+                    <td style="color: chartreuse" data-toggle="modal" data-target="#banda<?= $banda->cod_banda ?>"><?php echo $estado > 0 ? "<i class='fas fa-play' style='cursor: pointer'></i>" : null ?> </td>
 
                     <div class="modal fade" id="banda<?= $banda->cod_banda ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" style="max-width: 80%;" role="document">
@@ -160,16 +162,13 @@ if (isset($_POST['crearCategoria'])) {
                                         <label for="total">Peso total
                                             <input type="text" value="0" name="pesoTotal" id="pTotal<?= $banda->cod_banda ?>">
                                         </label>
+                                        <label for="total">Fecha inicial
+                                            <input type="text" value="<?php echo date("F j, Y, g:i a") ?>" name="fechaInicial" id="fechaInicial<?= $banda->cod_banda ?>">
+                                        </label>
+                                        <br>
                                         <button type="button" onclick="crearAguacate(<?= $banda->cod_banda ?>)">Empezar</button>
                                         <input type="submit" name="crearCategoria" value="Parar">
                                     </form>
-                                    <!-- <div>
-                                        <p>Categoría A = 2</p>
-                                        <p>Categoría B = 2</p>
-                                        <p>Categoría C = 2</p>
-                                        <p>Categoría D = 2</p>
-                                        <p>Total = 2</p>
-                                    </div> -->
                                     
                                 </div>
                                 <div class="modal-footer">
@@ -195,6 +194,7 @@ if (isset($_POST['crearCategoria'])) {
     </footer>
 
     <script>
+        var timeOut;
 
         function crearAguacate(id) {
             if (document.getElementById("sliderAguacate"+id)) {
@@ -258,9 +258,13 @@ if (isset($_POST['crearCategoria'])) {
             document.getElementById("total"+id).value = Number(document.getElementById("total"+id).value) + 1;
             document.getElementById("pTotal"+id).value = numeroRandom + Number(document.getElementById("pTotal"+id).value);
             // window.setInterval(crearAguacate, 5000, id);
-            setTimeout(() => {
+            timeOut = setTimeout(() => {
                 crearAguacate(id);
             }, 5000);
+        }
+
+        function stopTimeOut(){
+            clearTimeout(timeOut);
         }
 
     </script>

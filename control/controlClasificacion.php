@@ -37,7 +37,46 @@ class ControlClasificacion
     public function consultaClasificaciones()
     {
         try {
-            $sql = "SELECT cl.*, cate.cod_categoria, cate.nombre, br.contador  FROM clasificacion cl INNER JOIN banda_reco br ON cl.cod_clasificacion = br.cod_clasificacion INNER JOIN categoria cate ON br.cod_cate = cate.cod_categoria";
+            $sql = "SELECT * FROM clasificacion";
+            $prep = $this->cnx->prepare($sql);
+            $prep->execute();
+            $fincas = $prep->fetchAll(PDO::FETCH_OBJ);
+        } catch (PDOException $ex) {
+            die($ex->getMessage());
+        }
+        return $fincas;
+    }
+    
+    public function consultaClasificacionPorId($id)
+    {
+        try {
+            $sql = "SELECT * FROM clasificacion WHERE cod_clasificacion = $id";
+            $prep = $this->cnx->prepare($sql);
+            $prep->execute();
+            $fincas = $prep->fetchObject();
+        } catch (PDOException $ex) {
+            die($ex->getMessage());
+        }
+        return $fincas;
+    }
+    
+    public function consultaCategoriaPorClasificacion($id)
+    {
+        try {
+            $sql = "SELECT cate.nombre, cate.cod_categoria, br.contador FROM banda_reco br INNER JOIN categoria cate ON br.cod_cate = cate.cod_categoria WHERE br.cod_clasificacion = $id";
+            $prep = $this->cnx->prepare($sql);
+            $prep->execute();
+            $fincas = $prep->fetchAll(PDO::FETCH_OBJ);
+        } catch (PDOException $ex) {
+            die($ex->getMessage());
+        }
+        return $fincas;
+    }
+    
+    public function consultaCategoriaPorFecha($fecha)
+    {
+        try {
+            $sql = "SELECT * FROM clasificacion WHERE fecha_inicial LIKE '%$fecha%'";
             $prep = $this->cnx->prepare($sql);
             $prep->execute();
             $fincas = $prep->fetchAll(PDO::FETCH_OBJ);

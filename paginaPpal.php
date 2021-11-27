@@ -6,8 +6,6 @@ require_once 'control/controlClasificacion.php';
 $controlClasificacion = new ControlClasificacion();
 $clasificaciones = $controlClasificacion->consultaClasificaciones();
 
-var_dump($clasificaciones);
-
 if($varsesion == null || $varsesion == ''){
     echo '<script type="text/javascript"> alert("USTED NO TIENE AUTORIZACIÓN")</script>';
     die();
@@ -26,7 +24,7 @@ if($varsesion == null || $varsesion == ''){
     
     <link rel="stylesheet" type="text/css" href="css/estilos.css">
     <title>HASSOFT</title>
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
         window.addEventListener("load", function(event) {
             var template = document.getElementById("article-template");
 
@@ -39,7 +37,7 @@ if($varsesion == null || $varsesion == ''){
                 articles.appendChild(clonado);
             }
         });
-    </script>
+    </script> -->
 </head>
 
 <body>
@@ -76,37 +74,27 @@ if($varsesion == null || $varsesion == ''){
     </div>
     <div class="center">
         <section id="content">
-            <h2 class="subheader">Últimas Cosechas</h2>
+            <h2 class="subheader" style="display: inline-block;">Últimas Cosechas</h2>
+            <a href="consultaClasificacion.php">
+            <button href type="button" class="btn btn-success" style="display: inline-block; max-width: 100%;">Ver todas las cosechas</button>
+            </a>
             <!-- listado articulos -->
-            <div id="articles">
-                <article class="article-item" id="article-template">
-                    <div class="image-wrap">
-                        <img src="https://unhabitatmejor.leroymerlin.es/sites/default/files/styles/header_category/public/2018-10/4%20paisaje%20macedonia.jpg?itok=AELknmF8" alt="Paisaje">
-                    </div>
-                    <h2>Cosecha</h2>
-                    <span class="date">
-                        hace 5 minutos
-                    </span>
-                    <a href="#">Leer Más</a>
-                    <div class="clearfix"></div>
-                </article>
-            </div>
+            <?php foreach (array_slice($clasificaciones, 0, 5) as $key=>$clasificacion) :?>
+                <div id="articles">
+                    <article class="article-item" id="article-template">
+                        <div class="image-wrap">
+                            <img src="https://unhabitatmejor.leroymerlin.es/sites/default/files/styles/header_category/public/2018-10/4%20paisaje%20macedonia.jpg?itok=AELknmF8" alt="Paisaje">
+                        </div>
+                        <h2>Cosecha<?= $key + 1 ?></h2>
+                        <span class="date">
+                            <?= $clasificacion->fecha_inicial ?>
+                        </span>
+                        <a href="clasificacionDetalle.php?cod_clasificacion=<?= $clasificacion->cod_clasificacion ?>">Ver cosecha</a>
+                        <div class="clearfix"></div>
+                    </article>
+                </div>    
+            <?php endforeach; ?>
         </section>
-
-        <aside id="sidebar">
-            <div id="nav-blog" class="sidebar-item">
-                <h3>Puedes hacer esto</h3>
-                <a href="#" class="btn btn-success">Crear Artículo</a>
-            </div>
-            <div id="search" class="sidebar-item">
-                <h3>Buscador.</h3>
-                <p>Encuentra el artículo que buscas</p>
-                <form action="">
-                    <input type="text" name="search">
-                    <input type="submit" name="submit" value="buscar" class="btn">
-                </form>
-            </div>
-        </aside>
 
         <div class="clearfix"></div>
     </div>

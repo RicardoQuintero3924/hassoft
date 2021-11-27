@@ -104,7 +104,7 @@ if(isset($_POST['Modificar'])){
         <form action="" method="post" class="form" id="form">
             <h3><a href=""><i class="fas fa-tree"></i></a>Banda</h3>
             <label for="banda">Código Banda<span style="color: red">*</span></label>
-            <input type="text" value="<?= $ban->cod_banda ?>" name="banda" id="banda" placeholder="proximo codigo 00<?=$ultimo?>" onkeyup="validacionRequire(this)" required>
+            <input type="text" value="<?= $ban->cod_banda ?>" name="banda" id="banda" placeholder="proximo codigo 00<?=$ultimo?>" disabled>
             <label for="descripcion">Descripción <span style="color: red">*</span></label>
             <input type="text" name="descripcion" value="<?= $ban->descripcion ?>" id="descripcion" placeholder="Descripción" onkeyup="validacionRequire(this)" required>
             <label for="finca">Finca</label>
