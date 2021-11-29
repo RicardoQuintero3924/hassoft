@@ -37,7 +37,7 @@ class ControlClasificacion
     public function consultaClasificaciones()
     {
         try {
-            $sql = "SELECT * FROM clasificacion";
+            $sql = "SELECT * FROM clasificacion ORDER BY cod_clasificacion DESC;";
             $prep = $this->cnx->prepare($sql);
             $prep->execute();
             $fincas = $prep->fetchAll(PDO::FETCH_OBJ);
